@@ -21,10 +21,18 @@
       background: linear-gradient(#3cb09e, #2bc17b);
 
       .leftHeader {
+        display: flex;
+        padding:  24px 0px 0px 24px;
+        color: #fff;
+        font-size: 24px;
       }
 
       .leftContent {
-        position: relative;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         color: #fff;
         width: 347px;
         top: 50%;
@@ -54,8 +62,18 @@
         }
 
         .register {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           margin-top: 36px;
           height: 65px;
+          width: 255px;
+          background-color: transparent;
+          border: 1px solid #fff;
+          border-radius: 32px;
+          color: #fff;
+          font-size: 18px;
         }
       }
     }
