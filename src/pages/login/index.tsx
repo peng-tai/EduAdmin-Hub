@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import styles from './index.module.scss';
 
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 
 const Login = () => {
   const [account, setAccount] = useState('');
   const handleRegister = () => {
+    console.log('register');
+  };
+
+  const handleLogin = () => {
     console.log('register');
   };
 
@@ -26,7 +30,15 @@ const Login = () => {
             </Button>
           </div>
         </div>
-        <div className={styles.rightBox}></div>
+        <div className={styles.rightBox}>
+          <div className={styles.rightContent}>
+            <div className={styles.rightTitle}>后台登录</div>
+            <Input placeholder="请输入用户名" className={styles.rightInput} />
+            <Input placeholder="请输入密码" className={styles.rightInput} />
+            <Input placeholder="请输入验证码" className={styles.rightInput} />
+            <Button className={styles.loginBtn} onClick={handleLogin}>现在登录</Button>
+          </div>
+        </div>
       </div>
     </div>
   );
