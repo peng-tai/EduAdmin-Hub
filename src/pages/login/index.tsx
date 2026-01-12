@@ -10,7 +10,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    console.log('register');
+    window.location.href = '/home'
   };
 
   return (

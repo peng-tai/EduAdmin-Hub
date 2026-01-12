@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
 
   .loginBox {
     display: flex;
@@ -86,9 +87,14 @@
       flex: 1;
 
       .rightContent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         width: 455px;
 
         .rightTitle {
+          text-align: center;
           font-weight: 400;
           font-size: 36px;
           color: #2bc17b;
