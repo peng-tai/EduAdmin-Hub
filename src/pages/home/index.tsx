@@ -3,10 +3,75 @@ import React from 'react';
 import styles from './index.module.scss';
 
 const Home = () => {
-  return <div className={styles.content}>
-    <div>收入总览</div>
-    <div>总监部分</div>
-  </div>;
+  return (
+    <div className={styles.content}>
+      <div className={styles.info}>
+        <div
+          className={styles.card}
+          style={{
+            background: 'linear-gradient(#70e8c9, #a9e8e5)',
+          }}
+        >
+          <div className={styles.left}>icon</div>
+          <div className={styles.right}>
+            <div className={styles.name}>今日订单输入</div>
+            <div className={styles.num}>¥6668.88</div>
+            <div className={styles.desc}>+1.2% 同昨日比</div>
+          </div>
+        </div>
+        <div
+          className={styles.card}
+          style={{
+            background: 'linear-gradient(#D067CB, #D966D3)',
+          }}
+        >
+          <div className={styles.left}>icon</div>
+          <div className={styles.right}>
+            <div className={styles.name}>今日订单数量</div>
+            <div className={styles.num}>812</div>
+            <div className={styles.desc}>+2.7% 同昨日比</div>
+          </div>
+        </div>
+        <div
+          className={styles.card}
+          style={{
+            background: 'linear-gradient(#FDB06E, #FC9652)',
+          }}
+        >
+          <div className={styles.left}>icon</div>
+          <div className={styles.right}>
+            <div className={styles.name}>今日访客数</div>
+            <div className={styles.num}>323</div>
+            <div className={styles.desc}>+1.1% 同昨日比</div>
+          </div>
+        </div>
+        <div
+          className={styles.card}
+          style={{
+            background: 'linear-gradient(#FC8882, #FE716D)',
+          }}
+        >
+          <div className={styles.left}>icon</div>
+          <div className={styles.right}>
+            <div className={styles.name}>支付转化率</div>
+            <div className={styles.num}>10%</div>
+            <div className={styles.desc}>+1.5% 同昨日比</div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.chart}>
+        <div className={styles.time}>时段分布</div>
+        <div className={styles.gold}>金额分布</div>
+      </div>
+
+      
+      <div className={styles.chart}>
+        <div className={styles.time}>时段分布</div>
+        <div className={styles.gold}>金额分布</div>
+      </div>
+    </div>
+  );
 };
 
 export default Home;

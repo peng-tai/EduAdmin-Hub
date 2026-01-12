@@ -1,3 +1,60 @@
 .content {
   margin: 16px;
 }
+
+.info {
+  display: flex;
+
+  .card {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-radius: 4px;
+    width: 280px;
+    height: 150px;
+    margin-left: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    color: #fff;
+
+    .left {
+    }
+
+    .right {
+      text-align: right;
+      .name {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+
+      .num {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .desc {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.chart {
+  display: flex;
+  margin-top: 16px;
+  height: 349px;
+
+  .time {
+    width: 710px;
+    background-color: #fff;
+  }
+
+  .gold {
+    width: 450px;
+    background-color: #fff;
+    margin-left: 24px;
+  }
+}

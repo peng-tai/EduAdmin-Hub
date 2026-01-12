@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DesktopOutlined, FileOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -12,71 +12,71 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
   {
-    key: '1',
+    key: '/home',
     icon: <UserOutlined />,
     label: '首页',
   },
   {
-    key: '2',
+    key: '/course',
     icon: <DesktopOutlined />,
     label: '课程管理',
   },
   {
-    key: '3',
+    key: '/order',
     icon: <FileOutlined />,
     label: '订单管理',
     children: [
       {
-        key: '3-1',
+        key: '/order/list',
         label: '订单',
       },
       {
-        key: '3-2',
+        key: '/order/refund',
         label: '退款',
       },
     ],
   },
   {
-    key: '4',
+    key: '/user',
     icon: <FileOutlined />,
     label: '用户管理',
     children: [
       {
-        key: '4-1',
+        key: '/user/student',
         label: '学员',
       },
       {
-        key: '4-2',
+        key: '/user/teacher',
         label: '讲师',
       },
     ],
   },
   {
-    key: '5',
+    key: '/info',
     icon: <FileOutlined />,
     label: '资讯管理',
     children: [
       {
-        key: '5-1',
+        key: '/info/carousel',
         label: '轮播图',
       },
       {
-        key: '5-2',
+        key: '/info/article',
         label: '文章',
       },
     ],
   },
   {
-    key: '6',
+    key: '/promotion',
     icon: <FileOutlined />,
     label: '促销管理',
     children: [
       {
-        key: '6-1',
+        key: '/promotion/seckill',
         label: '秒杀活动',
       },
       {
-        key: '6-2',
+        key: '/promotion/coupon',
         label: '优惠券',
       },
     ],
@@ -84,25 +84,33 @@ const items: MenuItem[] = [
 ];
 
 const App: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
+  const currentPath = location.pathname;
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const handleSelect = (v: { key: string }) => {
+    if (!v.key) return;
+    navigate(v.key);
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
+        collapsible={false}
+        width={240}
       >
-        <div className="demo-logo-vertical" />
+        <div className={styles.title}>教育管理系统</div>
         <Menu
           theme="dark"
-          defaultOpenKeys={['3', '4', '5', '6']}
-          defaultSelectedKeys={['1']}
+          selectedKeys={[currentPath]}
+          defaultOpenKeys={['/order', '/user', '/info', '/promotion']}
           mode="inline"
           items={items}
+          onSelect={handleSelect}
         />
       </Sider>
       <Layout>
