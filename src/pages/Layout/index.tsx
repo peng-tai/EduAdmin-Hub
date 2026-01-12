@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { DesktopOutlined, FileOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
 import { Outlet } from 'react-router-dom';
@@ -16,33 +10,77 @@ import styles from './index.module.scss';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
-}
-
 const items: MenuItem[] = [
-  getItem('Option 1', '1', <PieChartOutlined />),
-  getItem('Option 2', '2', <DesktopOutlined />),
-  getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-  ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [
-    getItem('Team 1', '6'),
-    getItem('Team 2', '8'),
-  ]),
-  getItem('Files', '9', <FileOutlined />),
+  {
+    key: '1',
+    icon: <UserOutlined />,
+    label: '首页',
+  },
+  {
+    key: '2',
+    icon: <DesktopOutlined />,
+    label: '课程管理',
+  },
+  {
+    key: '3',
+    icon: <FileOutlined />,
+    label: '订单管理',
+    children: [
+      {
+        key: '3-1',
+        label: '订单',
+      },
+      {
+        key: '3-2',
+        label: '退款',
+      },
+    ],
+  },
+  {
+    key: '4',
+    icon: <FileOutlined />,
+    label: '用户管理',
+    children: [
+      {
+        key: '4-1',
+        label: '学员',
+      },
+      {
+        key: '4-2',
+        label: '讲师',
+      },
+    ],
+  },
+  {
+    key: '5',
+    icon: <FileOutlined />,
+    label: '资讯管理',
+    children: [
+      {
+        key: '5-1',
+        label: '轮播图',
+      },
+      {
+        key: '5-2',
+        label: '文章',
+      },
+    ],
+  },
+  {
+    key: '6',
+    icon: <FileOutlined />,
+    label: '促销管理',
+    children: [
+      {
+        key: '6-1',
+        label: '秒杀活动',
+      },
+      {
+        key: '6-2',
+        label: '优惠券',
+      },
+    ],
+  },
 ];
 
 const App: React.FC = () => {
@@ -61,6 +99,7 @@ const App: React.FC = () => {
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
+          defaultOpenKeys={['3', '4', '5', '6']}
           defaultSelectedKeys={['1']}
           mode="inline"
           items={items}
