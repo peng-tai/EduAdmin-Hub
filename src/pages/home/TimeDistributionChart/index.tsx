@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 // 按需引入ECharts模块 + 导入类型定义
 import * as echarts from 'echarts/core';
 import type { ECharts, EChartsCoreOption } from 'echarts/core';
