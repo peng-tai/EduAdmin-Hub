@@ -1,6 +1,8 @@
 import React from 'react';
 
 import styles from './index.module.scss';
+import TimeDistributionChart from './TimeDistributionChart';
+import PayAmountChart from './PayAmountChart';
 
 const Home = () => {
   return (
@@ -61,11 +63,14 @@ const Home = () => {
       </div>
 
       <div className={styles.chart}>
-        <div className={styles.time}>时段分布</div>
-        <div className={styles.gold}>金额分布</div>
+        <div className={styles.time}>
+          <TimeDistributionChart />
+        </div>
+        <div className={styles.gold}>
+          <PayAmountChart />
+        </div>
       </div>
 
-      
       <div className={styles.chart}>
         <div className={styles.time}>时段分布</div>
         <div className={styles.gold}>金额分布</div>
