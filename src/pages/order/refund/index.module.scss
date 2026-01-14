@@ -1,6 +1,122 @@
-.content {
-  margin: 16px;
+.container {
+  padding: 16px;
+}
+
+/* 搜索区域 */
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  padding: 24px;
+  background: #fff;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.searchItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.timePicker {
+  width: 220px;
+}
+
+.select {
+  width: 140px;
+}
+
+.input {
+  width: 200px;
+  margin-right: 8px;
+}
+
+.searchBtn {
+  background-color: #52c41a;
+  border-color: #52c41a;
+  margin-left: 64px;
+}
+.searchBtn:hover {
+  background-color: #73d13d !important;
+  border-color: #73d13d !important;
+}
+
+.resetBtn {
   background-color: #fff;
+  color: #666;
+  border-color: #d9d9d9;
+}
+
+/* 列表区域 */
+.list {
   border-radius: 4px;
-  height: 100%;
+  margin-bottom: 8px;
+  background-color: #fff;
+  padding: 24px;
+}
+
+.listTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.table {
+  margin-bottom: 16px;
+}
+
+.headerCheckbox {
+  margin-left: 8px;
+}
+
+/* 操作链接样式 */
+.viewLink {
+  color: #1890ff;
+}
+.cancelLink {
+  color: #ff4d4f;
+}
+.deleteLink {
+  color: #fa8c16;
+}
+
+/* 底部栏 */
+.footerBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.exportLink {
+  color: #52c41a;
+}
+
+.paginationWrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pageInfo {
+  color: #666;
+}
+
+.jumpWrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #666;
+}
+
+.jumpInput {
+  width: 50px;
+  text-align: center;
 }

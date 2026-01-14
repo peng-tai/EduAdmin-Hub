@@ -1,122 +1,169 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import styles from './index.module.scss';
-import { Table, type TableColumnsType, type TableProps } from 'antd';
+import { Checkbox, Space, Table } from 'antd';
 import SearchBar from './SearchBar';
 
 interface DataType {
   key: React.Key;
   id?: string;
   name?: string;
-  cover?: number;
+  code?: string;
+  cover?: string;
   course_name?: string;
   status?: string;
   order_num?: number;
   order_amount?: number;
   update_user?: string;
   update_time?: number;
+  price?: string;
+  sales?: string;
+  uploader?: string;
+  uploadTime?: string;
 }
 
-const columns: TableColumnsType<DataType> = [
-  {
-    title: '编号',
-    dataIndex: 'id',
-    render: (text: string) => <a>{text}</a>,
-  },
-  {
-    title: '名称',
-    dataIndex: 'name',
-    render: (text: string) => <a>{text}</a>,
-  },
-  {
-    title: '封面',
-    dataIndex: 'cover',
-    render: (text: string) => <a>{text}</a>,
-  },
-  {
-    title: '状态',
-    dataIndex: 'stauts',
-    render: (text: string) => <a>{text}</a>,
-  },
-  {
-    title: '价格',
-    dataIndex: 'order_amount',
-  },
-  {
-    title: '销量',
-    dataIndex: 'order_num',
-  },
-  {
-    title: '上传人',
-    dataIndex: 'update_user',
-  },
-  {
-    title: '上传时间',
-    dataIndex: 'update_time',
-  },
-  {
-    title: '操作',
-    dataIndex: 'operator',
-    render: () => {
-      return (
-        <div>
-          <div>查看</div>
-          <div>删除</div>
-        </div>
-      );
-    },
-  },
-];
-
-const data: DataType[] = [
+// 模拟课程数据
+const mockCourseData = [
   {
     key: '1',
-    id: 'code0001',
-    name: 'John Brown',
-    order_amount: 99.0,
-    status: '待支付',
-    course_name: 'New York 1',
+    code: 'CODE001',
+    name: '教程名称文字示例1',
+    cover: 'https://picsum.photos/id/64/40/40',
+    status: '上架',
+    price: '88.00',
+    sales: '640',
+    uploader: '金金',
+    uploadTime: '2021.07.01 15:00',
   },
   {
     key: '2',
-    id: 'code0002',
-    name: 'John Brown',
-    order_amount: 99.0,
-    status: '已关闭',
-    course_name: 'New York 1',
-  },
-  {
+    code: 'CODE002',
+    name: '如果超出八个字显...',
+    cover: 'https://picsum.photos/id/64/40/40',
+    status: '上架',
+    price: '128.00',
+    sales: '128',
+    uploader: '诸葛亮',
+    uploadTime: '2021.07.01 15:00',
+  },  {
     key: '3',
-    id: 'code0003',
-    name: 'John Brown',
-    order_amount: 99.0,
-    status: '待支付',
-    course_name: 'New York 2',
+    code: 'CODE003',
+    name: '教程名称文字示例1',
+    cover: 'https://picsum.photos/id/64/40/40',
+    status: '上架',
+    price: '88.00',
+    sales: '640',
+    uploader: '金金',
+    uploadTime: '2021.07.01 15:00',
   },
   {
     key: '4',
-    id: 'code0004',
-    name: 'John Brown',
-    order_amount: 99.0,
-    status: '已支付',
-    course_name: 'New York 3',
+    code: 'CODE004',
+    name: '如果超出八个字显...',
+    cover: 'https://picsum.photos/id/64/40/40',
+    status: '上架',
+    price: '128.00',
+    sales: '128',
+    uploader: '诸葛亮',
+    uploadTime: '2021.07.01 15:00',
+  },  {
+    key: '5',
+    code: 'CODE005',
+    name: '教程名称文字示例1',
+    cover: 'https://picsum.photos/id/64/40/40',
+    status: '上架',
+    price: '88.00',
+    sales: '640',
+    uploader: '金金',
+    uploadTime: '2021.07.01 15:00',
+  },
+  {
+    key: '6',
+    code: 'CODE006',
+    name: '如果超出八个字显...',
+    cover: 'https://picsum.photos/id/64/40/40',
+    status: '上架',
+    price: '128.00',
+    sales: '128',
+    uploader: '诸葛亮',
+    uploadTime: '2021.07.01 15:00',
   },
 ];
 
-const rowSelection: TableProps<DataType>['rowSelection'] = {
-  onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      'selectedRows: ',
-      selectedRows,
-    );
-  },
-  getCheckboxProps: (record: DataType) => ({
-    disabled: record.name === 'Disabled User', // Column configuration not to be checked
-    name: record.name,
-  }),
-};
-
 const Course = () => {
+  // 全选状态管理
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [allChecked, setAllChecked] = useState(false);
+
+  // 表格列配置（包含全选表头）
+  const columns = useMemo(
+    () => [
+      {
+        title: (
+          <Checkbox
+            checked={allChecked}
+            onChange={(e) => {
+              setAllChecked(e.target.checked);
+              // 全选/取消全选：选中所有行key
+              setSelectedRowKeys(
+                e.target.checked ? mockCourseData.map((item) => item.key) : [],
+              );
+            }}
+            className={styles.checkboxHeader}
+          />
+        ),
+        dataIndex: 'key',
+        render: (_: unknown, record: DataType) => (
+          <Checkbox
+            checked={selectedRowKeys.includes(record.key)}
+            onChange={(e) => {
+              const newSelected = [...selectedRowKeys];
+              if (e.target.checked) {
+                newSelected.push(record.key);
+              } else {
+                const index = newSelected.indexOf(record.key);
+                newSelected.splice(index, 1);
+              }
+              setSelectedRowKeys(newSelected);
+              // 同步全选状态
+              setAllChecked(newSelected.length === mockCourseData.length);
+            }}
+          />
+        ),
+        width: 40,
+      },
+      { title: '编号', dataIndex: 'code' },
+      { title: '名称', dataIndex: 'name' },
+      {
+        title: '封面',
+        dataIndex: 'cover',
+        render: (cover: string) => (
+          <img src={cover} alt="封面" className={styles.coverImg} />
+        ),
+      },
+      { title: '状态', dataIndex: 'status' },
+      { title: '价格', dataIndex: 'price' },
+      { title: '销量', dataIndex: 'sales' },
+      { title: '上传人', dataIndex: 'uploader' },
+      { title: '上传时间', dataIndex: 'uploadTime' },
+      {
+        title: '操作',
+        render: (_: unknown, record: DataType) => (
+          <Space>
+            <a className={styles.editLink}>编辑</a>
+            <a
+              className={
+                record.status === '上架' ? styles.downLink : styles.upLink
+              }
+            >
+              {record.status === '上架' ? '下架' : '上架'}
+            </a>
+            <a className={styles.deleteLink}>删除</a>
+          </Space>
+        ),
+      },
+    ],
+    [selectedRowKeys, allChecked],
+  );
   return (
     <div className={styles.content}>
       <div className={styles.select}>
@@ -124,10 +171,13 @@ const Course = () => {
       </div>
       <div className={styles.list}>
         <div className={styles.name}>课程列表</div>
-        <Table<DataType>
-          rowSelection={{ type: 'checkbox', ...rowSelection }}
+        <Table
           columns={columns}
-          dataSource={data}
+          dataSource={mockCourseData}
+          pagination={false}
+          bordered
+          className={styles.table}
+          rowKey="key"
         />
       </div>
     </div>

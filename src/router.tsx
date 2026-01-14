@@ -7,6 +7,8 @@ import Layout from './pages/layout/index.tsx';
 import Course from './pages/course/index.tsx';
 import OrderList from './pages/order/list/index.tsx';
 import OrderRefund from './pages/order/refund/index.tsx';
+import TeacherManager from './pages/user/teacher/index.tsx';
+import StudentManager from './pages/user/student/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -41,11 +43,11 @@ const router = createBrowserRouter([
             children: [
               {
                 path: 'student',
-                element: <div>学员</div>,
+                element: <StudentManager></StudentManager>,
               },
               {
                 path: 'teacher',
-                element: <div>讲师</div>,
+                element: <TeacherManager></TeacherManager>,
               },
             ],
           },

@@ -131,7 +131,7 @@ const mockOrderData: OrderData[] = [
   },
 ];
 
-const OrderList = () => {
+const StudentManager = () => {
   // 搜索参数状态
   const [searchParams, setSearchParams] = useState({
     timeRange: [null, null] as [Dayjs | null, Dayjs | null],
@@ -202,19 +202,13 @@ const OrderList = () => {
       { title: '手机号', dataIndex: 'phone' },
       { title: '课程名称', dataIndex: 'courseName' },
       { title: '订单金额', dataIndex: 'amount' },
-      { title: '订单状态', dataIndex: 'status' },
+      { title: '处理状态', dataIndex: 'status' },
       { title: '提交时间', dataIndex: 'submitTime' },
       {
         title: '操作',
         render: (_: unknown, record: OrderData) => (
           <Space>
-            <a className={styles.viewLink}>查看</a>
-            {record.status === '待支付' && (
-              <a className={styles.cancelLink}>取消</a>
-            )}
-            {record.status === '已关闭' && (
-              <a className={styles.deleteLink}>删除</a>
-            )}
+            <a className={styles.viewLink}>查看详情</a>
           </Space>
         ),
       },
@@ -272,7 +266,7 @@ const OrderList = () => {
 
       {/* 订单列表 */}
       <div className={styles.list}>
-        <h3 className={styles.listTitle}>订单列表</h3>
+        <h3 className={styles.listTitle}>退款订单列表</h3>
         <Table
           columns={columns}
           dataSource={mockOrderData}
@@ -310,4 +304,4 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default StudentManager;
