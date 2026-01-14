@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './index.module.scss';
 
 import { Button, Input } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [account, setAccount] = useState('');
   const handleRegister = () => {
     console.log('register');
   };
 
   const handleLogin = () => {
-    window.location.href = '/home'
+    navigate('/home');
   };
 
   return (
@@ -36,7 +38,9 @@ const Login = () => {
             <Input placeholder="请输入用户名" className={styles.rightInput} />
             <Input placeholder="请输入密码" className={styles.rightInput} />
             <Input placeholder="请输入验证码" className={styles.rightInput} />
-            <Button className={styles.loginBtn} onClick={handleLogin}>现在登录</Button>
+            <Button className={styles.loginBtn} onClick={handleLogin}>
+              现在登录
+            </Button>
           </div>
         </div>
       </div>

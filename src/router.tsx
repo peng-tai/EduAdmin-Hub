@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 import Login from './pages/login/index.tsx';
 import Home from './pages/home/index.tsx';
@@ -14,7 +14,7 @@ import Seckill from './pages/promotion/seckill/index.tsx';
 import Coupon from './pages/promotion/coupon/index.tsx';
 import AppLayout from './pages/layout/index.tsx';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     children: [
