@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [account, setAccount] = useState('');
+  const [account] = useState('');
   const handleRegister = () => {
     console.log('register');
   };
