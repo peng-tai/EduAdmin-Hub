@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { Button, Table, type TableColumnsType, type TableProps } from 'antd';
+import { Table, type TableColumnsType, type TableProps } from 'antd';
+import SearchBar from './SearchBar';
 
 interface DataType {
   key: React.Key;
@@ -119,14 +120,10 @@ const Course = () => {
   return (
     <div className={styles.content}>
       <div className={styles.select}>
-        <div>上传时间</div>
-        <div>上架状态</div>
-        <div>上传人</div>
-        <div>手动搜索</div>
-        <Button>搜索</Button>
-        <Button>重置</Button>
+        <SearchBar></SearchBar>
       </div>
       <div className={styles.list}>
+        <div className={styles.name}>课程列表</div>
         <Table<DataType>
           rowSelection={{ type: 'checkbox', ...rowSelection }}
           columns={columns}

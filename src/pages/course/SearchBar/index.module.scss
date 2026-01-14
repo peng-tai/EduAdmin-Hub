@@ -1,0 +1,67 @@
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 4px;
+  gap: 120px;
+  flex-wrap: wrap;
+
+  .search-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .search-label {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.85);
+      white-space: nowrap;
+    }
+
+    .search-range-picker {
+      width: 240px;
+    }
+
+    .search-select {
+      width: 160px;
+    }
+  }
+
+  .search-keyword-group {
+    gap: 16px;
+
+    .search-input {
+      width: 200px;
+    }
+
+    .search-btn-group {
+      display: flex;
+      gap: 8px;
+
+      .search-btn {
+        background-color: #52c41a;
+        border-color: #52c41a;
+        &:hover {
+          background-color: #73d13d;
+          border-color: #73d13d;
+        }
+      }
+
+      .reset-btn {
+        background-color: #f5f5f5;
+        color: rgba(0, 0, 0, 0.85);
+        &:hover {
+          background-color: #e6e6e6;
+        }
+      }
+    }
+  }
+
+  // 响应式适配
+  @media (max-width: 768px) {
+    .search-keyword-group {
+      margin-left: 0;
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}

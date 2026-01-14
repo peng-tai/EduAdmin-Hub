@@ -41,15 +41,27 @@ const mockDataMap: Record<DateKey, number[]> = {
 };
 
 // 时段数据（固定）
-const timeAxis = ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00', '24:00'];
+const timeAxis = [
+  '00:00',
+  '03:00',
+  '06:00',
+  '09:00',
+  '12:00',
+  '15:00',
+  '18:00',
+  '21:00',
+  '24:00',
+];
 
 const PayAmountChart = () => {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstanceRef = useRef<ECharts | null>(null);
-  
+
   // 改用Dayjs对象存储选中日期
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs('2020-09-05'));
-  const [chartData, setChartData] = useState<number[]>(mockDataMap['2020-09-05']);
+  const [chartData, setChartData] = useState<number[]>(
+    mockDataMap['2020-09-05'],
+  );
 
   // 图表配置项
   const getOption = (): EChartsCoreOption => {
@@ -60,53 +72,54 @@ const PayAmountChart = () => {
         top: '24px',
         textStyle: {
           fontSize: 24,
-          fontWeight: '600'
-        }
+          fontWeight: '600',
+        },
       },
       grid: {
-        left: '24px',
-        right: '24px',
-        bottom: '24px',
-        top: '80px',
-        containLabel: true
+        outerBounds: {
+          top: 80, // 上边界偏移
+          bottom: 0, // 下边界偏移（容纳 x 轴标签）
+          left: 0, // 左边界偏移（容纳 y 轴标签）
+          right: 0, // 右边界偏移
+        },
       },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          type: 'shadow'
+          type: 'shadow',
         },
         formatter: (params: EchartsTooltipParams[]) => {
           if (!params || params.length === 0) return '';
           return `${params[0].name}<br/>实付金额：${params[0].value}`;
-        }
+        },
       },
       xAxis: {
         type: 'category',
         data: timeAxis,
         axisLine: {
           lineStyle: {
-            color: '#ccc'
-          }
+            color: '#ccc',
+          },
         },
         axisLabel: {
           interval: 0,
-          fontSize: 12
-        }
+          fontSize: 12,
+        },
       },
       yAxis: {
         type: 'value',
         max: 1000,
         axisLine: {
           lineStyle: {
-            color: '#ccc'
-          }
+            color: '#ccc',
+          },
         },
         splitLine: {
           lineStyle: {
             type: 'dashed',
-            color: '#eee'
-          }
-        }
+            color: '#eee',
+          },
+        },
       },
       series: [
         {
@@ -116,16 +129,16 @@ const PayAmountChart = () => {
           barWidth: 20,
           itemStyle: {
             color: '#52C41A',
-            borderRadius: [4, 4, 0, 0]
+            borderRadius: [4, 4, 0, 0],
           },
           label: {
             show: true,
             position: 'top',
             color: '#333',
-            fontSize: 12
-          }
-        }
-      ]
+            fontSize: 12,
+          },
+        },
+      ],
     };
   };
 
@@ -143,10 +156,10 @@ const PayAmountChart = () => {
   // 修复：正确处理DatePicker的onChange
   const handleDateChange: DatePickerProps['onChange'] = (date) => {
     if (!date || Array.isArray(date)) return;
-    
+
     const dateStr = date.format('YYYY-MM-DD') as DateKey;
     const validDateKeys: DateKey[] = ['2020-09-05', '2020-09-06', '2020-09-07'];
-    
+
     if (validDateKeys.includes(dateStr)) {
       setSelectedDate(date);
       setChartData(mockDataMap[dateStr]);
@@ -174,14 +187,16 @@ const PayAmountChart = () => {
       {/* 图表容器 */}
       <div ref={chartRef} style={{ width: '100%', height: '100%' }} />
       {/* Antd日期选择器 + 按钮 */}
-      <div style={{ 
-        position: 'absolute', 
-        top: '24px', 
-        right: '24px', 
-        display: 'flex', 
-        alignItems: 'center',
-        gap: 8
-      }}>
+      <div
+        style={{
+          position: 'absolute',
+          top: '24px',
+          right: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+        }}
+      >
         <span style={{ fontSize: 12 }}>日期</span>
         <DatePicker
           value={selectedDate}
