@@ -46,7 +46,7 @@ jobs:
       # 步骤4：安装pnpm包管理器
       - name: Install pnpm
         if: steps.check_commit.outputs.deploy == 'true'
-        run: npm install -g pnpm # 使用npm全局安装pnpm
+        run: npm install -g pnpm # 全局安装pnpm
 
       # 步骤4b：验证pnpm安装
       - name: Verify pnpm installation
