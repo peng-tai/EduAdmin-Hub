@@ -9,7 +9,7 @@ import {
   Space,
   Pagination,
 } from 'antd';
-import { SearchOutlined, RedoOutlined } from '@ant-design/icons';
+import { SearchOutlined, RedoOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 import type { Dayjs } from 'dayjs';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -18,116 +18,87 @@ const { RangePicker } = DatePicker;
 
 interface OrderData {
   key: string;
-  orderNo: string;
   nickname: string;
-  phone: string;
-  courseName: string;
-  amount: string;
-  status: string;
-  submitTime: string;
+  intro: string;
+  addTime: string;
+  checked: boolean;
 }
 
 // 模拟订单数据
 const mockOrderData: OrderData[] = [
   {
     key: '1',
-    orderNo: 'CODE001',
     nickname: '金金',
-    phone: '15810000000',
-    courseName: '教程名称文字示例1',
-    amount: '88.00',
-    status: '待支付',
-    submitTime: '2021.07.01 15:00',
+    intro:
+      '这里是讲师简介内容，超出最大宽度显示这里是讲师简介内容，超出最大宽度显示这里...',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '2',
-    orderNo: 'CODE002',
     nickname: '诸葛亮',
-    phone: '15810000000',
-    courseName: '如果超出八个字显...',
-    amount: '128.00',
-    status: '已支付',
-    submitTime: '2021.07.01 15:00',
+    intro: '这里是讲师简介文字示例信息',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '3',
-    orderNo: 'CODE003',
     nickname: '曹操',
-    phone: '15810000000',
-    courseName: '这是教程示例3',
-    amount: '88.00',
-    status: '已关闭',
-    submitTime: '2021.07.01 15:00',
+    intro: '这里是讲师简介内容，超出最大宽度显示这里是讲师简介内容',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '4',
-    orderNo: 'CODE004',
     nickname: '小张',
-    phone: '15810000000',
-    courseName: '教程名称示例4',
-    amount: '128.00',
-    status: '已支付',
-    submitTime: '2021.07.01 15:00',
+    intro:
+      '这里是讲师简介内容，超出最大宽度显示这里是讲师简介内容，超出最大宽度显示这里...',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '5',
-    orderNo: 'CODE005',
     nickname: '金金小张',
-    phone: '15810000000',
-    courseName: '教程名称示例5',
-    amount: '126.00',
-    status: '待支付',
-    submitTime: '2021.07.01 15:00',
+    intro: '这里是讲师简介文字示例信息',
+    addTime: '2021.07.01 15:00',
+    checked: true,
   },
   {
     key: '6',
-    orderNo: 'CODE006',
     nickname: '王小样',
-    phone: '15810000000',
-    courseName: '教程名称示例6',
-    amount: '88.00',
-    status: '已支付',
-    submitTime: '2021.07.01 15:00',
+    intro:
+      '这里是讲师简介内容，超出最大宽度显示这里是讲师简介内容这里是讲师简介内容',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '7',
-    orderNo: 'CODE007',
     nickname: '穆一一',
-    phone: '15810000000',
-    courseName: '教程名称示例7',
-    amount: '68.00',
-    status: '已支付',
-    submitTime: '2021.07.01 15:00',
+    intro: '最大宽度显示这里是讲师简介内容，超出最大宽度显示这里...',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '8',
-    orderNo: 'CODE008',
-    nickname: '邓基',
-    phone: '15810000000',
-    courseName: '教程名称示例8',
-    amount: '88.00',
-    status: '已关闭',
-    submitTime: '2021.07.01 15:00',
+    nickname: '邓君',
+    intro: '这里是讲师简介文字示例信息',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '9',
-    orderNo: 'CODE009',
     nickname: '刘备',
-    phone: '15810000000',
-    courseName: '教程名称示例9',
-    amount: '128.00',
-    status: '已支付',
-    submitTime: '2021.07.01 15:00',
+    intro:
+      '这里是讲师简介内容，超出最大宽度显示这里是讲师简介内容这里是讲师简介内容',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '10',
-    orderNo: 'CODE0010',
     nickname: '关于',
-    phone: '15810000000',
-    courseName: '教程名称示例10',
-    amount: '88.00',
-    status: '已支付',
-    submitTime: '2021.07.01 15:00',
+    intro: '这里是讲师简介文字示例信息',
+    addTime: '2021.07.01 15:00',
+    checked: false,
   },
 ];
 
@@ -181,34 +152,47 @@ const TeacherManager = () => {
   const columns = useMemo(
     () => [
       {
-        title: (
-          <Checkbox
-            checked={allChecked}
-            onChange={handleAllCheck}
-            className={styles.headerCheckbox}
-          />
-        ),
-        dataIndex: 'key',
-        render: (key: string) => (
-          <Checkbox
-            checked={selectedRowKeys.includes(key)}
-            onChange={(e) => handleRowCheck(e, key)}
-          />
-        ),
+        title: <Checkbox className="table-header-checkbox" />,
+        dataIndex: 'checked',
+        render: (checked) => <Checkbox checked={checked} />,
         width: 40,
       },
-      { title: '订单编号', dataIndex: 'orderNo' },
-      { title: '用户昵称', dataIndex: 'nickname' },
-      { title: '手机号', dataIndex: 'phone' },
-      { title: '课程名称', dataIndex: 'courseName' },
-      { title: '订单金额', dataIndex: 'amount' },
-      { title: '处理状态', dataIndex: 'status' },
-      { title: '提交时间', dataIndex: 'submitTime' },
+      {
+        title: '讲师名称',
+        dataIndex: 'nickname',
+        key: 'nickname',
+      },
+      {
+        title: '讲师简介',
+        dataIndex: 'intro',
+        key: 'intro',
+        ellipsis: { showTitle: false }, // 超出省略（hover显示完整）
+      },
+      {
+        title: '添加时间',
+        dataIndex: 'addTime',
+        key: 'addTime',
+      },
       {
         title: '操作',
-        render: (_: unknown, record: OrderData) => (
-          <Space>
-            <a className={styles.viewLink}>查看详情</a>
+        dataIndex: 'action',
+        key: 'action',
+        render: () => (
+          <Space size="small">
+            <Button
+              type="link"
+              icon={<EditOutlined />}
+              className="action-btn edit"
+            >
+              编辑
+            </Button>
+            <Button
+              type="link"
+              icon={<DeleteOutlined />}
+              className="action-btn delete"
+            >
+              删除
+            </Button>
           </Space>
         ),
       },
@@ -266,7 +250,7 @@ const TeacherManager = () => {
 
       {/* 订单列表 */}
       <div className={styles.list}>
-        <h3 className={styles.listTitle}>退款订单列表</h3>
+        <h3 className={styles.listTitle}>讲师列表</h3>
         <Table
           columns={columns}
           dataSource={mockOrderData}

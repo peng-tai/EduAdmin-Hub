@@ -9,6 +9,10 @@ import OrderList from './pages/order/list/index.tsx';
 import OrderRefund from './pages/order/refund/index.tsx';
 import TeacherManager from './pages/user/teacher/index.tsx';
 import StudentManager from './pages/user/student/index.tsx';
+import CarouselManager from './pages/info/carousel/index.tsx';
+import ArticleManager from './pages/info/article/index.tsx';
+import Seckill from './pages/promotion/seckill/index.tsx';
+import Coupon from './pages/promotion/coupon/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -56,11 +60,11 @@ const router = createBrowserRouter([
             children: [
               {
                 path: 'carousel',
-                element: <div>轮播图</div>,
+                element: <CarouselManager></CarouselManager>,
               },
               {
                 path: 'article',
-                element: <div>文章</div>,
+                element: <ArticleManager></ArticleManager>,
               },
             ],
           },
@@ -69,11 +73,11 @@ const router = createBrowserRouter([
             children: [
               {
                 path: 'seckill',
-                element: <div>秒杀活动</div>,
+                element: <Seckill></Seckill>,
               },
               {
                 path: 'coupon',
-                element: <div>优惠券</div>,
+                element: <Coupon></Coupon>,
               },
             ],
           },

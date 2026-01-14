@@ -8,9 +8,14 @@ import {
   Checkbox,
   Space,
   Pagination,
-  Switch,
 } from 'antd';
-import { SearchOutlined, RedoOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  SearchOutlined,
+  RedoOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  SettingOutlined,
+} from '@ant-design/icons';
 import styles from './index.module.scss';
 import type { Dayjs } from 'dayjs';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -19,13 +24,12 @@ const { RangePicker } = DatePicker;
 
 interface OrderData {
   key: string;
-  userId: string;
-  nickname: string;
-  phone: string;
-  amount: number;
-  orderCount: number;
-  payTime: string;
-  disabled: boolean;
+  activityNo: string;
+  title: string;
+  cover: string;
+  status: string;
+  startTime: string;
+  endTime: string;
   checked: boolean;
 }
 
@@ -33,117 +37,107 @@ interface OrderData {
 const mockOrderData: OrderData[] = [
   {
     key: '1',
-    userId: 'CODE001',
-    nickname: '金金',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    activityNo: 'CODE001',
+    title: '轮播图研究文字示例1',
+    cover: 'https://picsum.photos/id/21/60/40',
+    status: '进行中',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '2',
-    userId: 'CODE002',
-    nickname: '诸葛亮',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: true,
+    activityNo: 'CODE002',
+    title: '如果超出十个字则...',
+    cover: 'https://picsum.photos/id/22/60/40',
+    status: '已下线',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '3',
-    userId: 'CODE003',
-    nickname: '曹操',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 6,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    activityNo: 'CODE003',
+    title: '这里轮播活动3',
+    cover: 'https://picsum.photos/id/23/60/40',
+    status: '已下线',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '4',
-    userId: 'CODE004',
-    nickname: '小张',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
-    checked: false,
-  },
-  {
-    key: '5',
-    userId: 'CODE005',
-    nickname: '金金小张',
-    phone: '15810000000',
-    amount: 126.0,
-    orderCount: 3,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    activityNo: 'CODE004',
+    title: '盖说明名称示例4',
+    cover: 'https://picsum.photos/id/24/60/40',
+    status: '已下线',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: true,
   },
   {
+    key: '5',
+    activityNo: 'CODE005',
+    title: '说明名称示例5',
+    cover: 'https://picsum.photos/id/25/60/40',
+    status: '已下线',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
+    checked: false,
+  },
+  {
     key: '6',
-    userId: 'CODE006',
-    nickname: '王小样',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    activityNo: 'CODE006',
+    title: '轮播活动示例6',
+    cover: 'https://picsum.photos/id/26/60/40',
+    status: '进行中',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '7',
-    userId: 'CODE007',
-    nickname: '穆一一',
-    phone: '15810000000',
-    amount: 68.0,
-    orderCount: 6,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    activityNo: 'CODE007',
+    title: '说明活动名称7',
+    cover: 'https://picsum.photos/id/27/60/40',
+    status: '进行中',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '8',
-    userId: 'CODE008',
-    nickname: '邓君',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    activityNo: 'CODE008',
+    title: '说明活动名称8',
+    cover: 'https://picsum.photos/id/28/60/40',
+    status: '进行中',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '9',
-    userId: 'CODE009',
-    nickname: '刘备',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    activityNo: 'CODE009',
+    title: '说明活动名称9',
+    cover: 'https://picsum.photos/id/29/60/40',
+    status: '已下线',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '10',
-    userId: 'CODE010',
-    nickname: '关于',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 3,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    activityNo: 'CODE010',
+    title: '说明名称示例10',
+    cover: 'https://picsum.photos/id/30/60/40',
+    status: '已下线',
+    startTime: '2021.07.01 15:00',
+    endTime: '2021.07.01 15:00',
     checked: false,
   },
 ];
 
-const StudentManager = () => {
+const Seckill = () => {
   // 搜索参数状态
   const [searchParams, setSearchParams] = useState({
     timeRange: [null, null] as [Dayjs | null, Dayjs | null],
@@ -194,46 +188,52 @@ const StudentManager = () => {
     () => [
       {
         title: <Checkbox className="table-header-checkbox" />,
-        dataIndex: 'check',
-        render: (_, record) => <Checkbox checked={record.checked} />,
+        dataIndex: 'checked',
+        render: (checked) => <Checkbox checked={checked} />,
         width: 40,
       },
       {
-        title: '用户ID',
-        dataIndex: 'userId',
-        key: 'userId',
+        title: '活动编号',
+        dataIndex: 'activityNo',
+        key: 'activityNo',
       },
       {
-        title: '用户昵称',
-        dataIndex: 'nickname',
-        key: 'nickname',
+        title: '活动标题',
+        dataIndex: 'title',
+        key: 'title',
       },
       {
-        title: '手机号',
-        dataIndex: 'phone',
-        key: 'phone',
+        title: '活动封面',
+        dataIndex: 'cover',
+        key: 'cover',
+        render: (cover) => (
+          <img src={cover} alt="活动封面" className="activity-cover" />
+        ),
+        width: 80,
       },
       {
-        title: '付费金额',
-        dataIndex: 'amount',
-        key: 'amount',
-        render: (val) => `¥${val.toFixed(2)}`,
+        title: '活动状态',
+        dataIndex: 'status',
+        key: 'status',
+        render: (status) => (
+          <span
+            className={
+              status === '进行中' ? 'status-active' : 'status-inactive'
+            }
+          >
+            {status}
+          </span>
+        ),
       },
       {
-        title: '订单数量',
-        dataIndex: 'orderCount',
-        key: 'orderCount',
+        title: '开始时间',
+        dataIndex: 'startTime',
+        key: 'startTime',
       },
       {
-        title: '付费时间',
-        dataIndex: 'payTime',
-        key: 'payTime',
-      },
-      {
-        title: '账户禁用',
-        dataIndex: 'disabled',
-        key: 'disabled',
-        render: (val) => <Switch checked={val} />,
+        title: '结束时间',
+        dataIndex: 'endTime',
+        key: 'endTime',
       },
       {
         title: '操作',
@@ -241,6 +241,13 @@ const StudentManager = () => {
         key: 'action',
         render: () => (
           <Space size="small">
+            <Button
+              type="link"
+              icon={<SettingOutlined />}
+              className="action-btn setting"
+            >
+              设置
+            </Button>
             <Button
               type="link"
               icon={<EditOutlined />}
@@ -312,7 +319,7 @@ const StudentManager = () => {
 
       {/* 订单列表 */}
       <div className={styles.list}>
-        <h3 className={styles.listTitle}>学员列表</h3>
+        <h3 className={styles.listTitle}>秒杀活动列表</h3>
         <Table
           columns={columns}
           dataSource={mockOrderData}
@@ -350,4 +357,4 @@ const StudentManager = () => {
   );
 };
 
-export default StudentManager;
+export default Seckill;

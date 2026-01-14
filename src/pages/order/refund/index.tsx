@@ -9,7 +9,7 @@ import {
   Space,
   Pagination,
 } from 'antd';
-import { SearchOutlined, RedoOutlined } from '@ant-design/icons';
+import { SearchOutlined, RedoOutlined, EyeOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 import type { Dayjs } from 'dayjs';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -22,9 +22,10 @@ interface OrderData {
   nickname: string;
   phone: string;
   courseName: string;
-  amount: string;
+  amount: number;
   status: string;
   submitTime: string;
+  checked: boolean;
 }
 
 // 模拟订单数据
@@ -35,19 +36,21 @@ const mockOrderData: OrderData[] = [
     nickname: '金金',
     phone: '15810000000',
     courseName: '教程名称文字示例1',
-    amount: '88.00',
-    status: '待支付',
+    amount: 88.0,
+    status: '待处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '2',
     orderNo: 'CODE002',
     nickname: '诸葛亮',
     phone: '15810000000',
-    courseName: '如果超出八个字显...',
-    amount: '128.00',
-    status: '已支付',
+    courseName: '如果超出八个字...',
+    amount: 128.0,
+    status: '已处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '3',
@@ -55,19 +58,21 @@ const mockOrderData: OrderData[] = [
     nickname: '曹操',
     phone: '15810000000',
     courseName: '这是教程示例3',
-    amount: '88.00',
-    status: '已关闭',
+    amount: 88.0,
+    status: '已处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '4',
     orderNo: 'CODE004',
     nickname: '小张',
     phone: '15810000000',
-    courseName: '教程名称示例4',
-    amount: '128.00',
-    status: '已支付',
+    courseName: '是教程名称示例4',
+    amount: 128.0,
+    status: '已处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '5',
@@ -75,9 +80,10 @@ const mockOrderData: OrderData[] = [
     nickname: '金金小张',
     phone: '15810000000',
     courseName: '教程名称示例5',
-    amount: '126.00',
-    status: '待支付',
+    amount: 126.0,
+    status: '待处理',
     submitTime: '2021.07.01 15:00',
+    checked: true,
   },
   {
     key: '6',
@@ -85,9 +91,10 @@ const mockOrderData: OrderData[] = [
     nickname: '王小样',
     phone: '15810000000',
     courseName: '教程名称示例6',
-    amount: '88.00',
-    status: '已支付',
+    amount: 88.0,
+    status: '待处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '7',
@@ -95,19 +102,21 @@ const mockOrderData: OrderData[] = [
     nickname: '穆一一',
     phone: '15810000000',
     courseName: '教程名称示例7',
-    amount: '68.00',
-    status: '已支付',
+    amount: 68.0,
+    status: '已处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '8',
     orderNo: 'CODE008',
-    nickname: '邓基',
+    nickname: '邓君',
     phone: '15810000000',
     courseName: '教程名称示例8',
-    amount: '88.00',
-    status: '已关闭',
+    amount: 88.0,
+    status: '已处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '9',
@@ -115,19 +124,21 @@ const mockOrderData: OrderData[] = [
     nickname: '刘备',
     phone: '15810000000',
     courseName: '教程名称示例9',
-    amount: '128.00',
-    status: '已支付',
+    amount: 128.0,
+    status: '已处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
   {
     key: '10',
-    orderNo: 'CODE0010',
+    orderNo: 'CODE010',
     nickname: '关于',
     phone: '15810000000',
     courseName: '教程名称示例10',
-    amount: '88.00',
-    status: '已支付',
+    amount: 88.0,
+    status: '已处理',
     submitTime: '2021.07.01 15:00',
+    checked: false,
   },
 ];
 
@@ -181,35 +192,69 @@ const OrderRefund = () => {
   const columns = useMemo(
     () => [
       {
-        title: (
-          <Checkbox
-            checked={allChecked}
-            onChange={handleAllCheck}
-            className={styles.headerCheckbox}
-          />
-        ),
-        dataIndex: 'key',
-        render: (key: string) => (
-          <Checkbox
-            checked={selectedRowKeys.includes(key)}
-            onChange={(e) => handleRowCheck(e, key)}
-          />
-        ),
+        title: <Checkbox className="table-header-checkbox" />,
+        dataIndex: 'checked',
+        render: (checked) => <Checkbox checked={checked} />,
         width: 40,
       },
-      { title: '订单编号', dataIndex: 'orderNo' },
-      { title: '用户昵称', dataIndex: 'nickname' },
-      { title: '手机号', dataIndex: 'phone' },
-      { title: '课程名称', dataIndex: 'courseName' },
-      { title: '订单金额', dataIndex: 'amount' },
-      { title: '处理状态', dataIndex: 'status' },
-      { title: '提交时间', dataIndex: 'submitTime' },
+      {
+        title: '订单编号',
+        dataIndex: 'orderNo',
+        key: 'orderNo',
+      },
+      {
+        title: '用户昵称',
+        dataIndex: 'nickname',
+        key: 'nickname',
+      },
+      {
+        title: '手机号',
+        dataIndex: 'phone',
+        key: 'phone',
+      },
+      {
+        title: '课程名称',
+        dataIndex: 'courseName',
+        key: 'courseName',
+        ellipsis: true, // 超出省略
+      },
+      {
+        title: '订单金额',
+        dataIndex: 'amount',
+        key: 'amount',
+        render: (val) => `¥${val.toFixed(2)}`,
+      },
+      {
+        title: '处理状态',
+        dataIndex: 'status',
+        key: 'status',
+        render: (status) => (
+          <span
+            className={
+              status === '待处理' ? 'status-pending' : 'status-handled'
+            }
+          >
+            {status}
+          </span>
+        ),
+      },
+      {
+        title: '提交时间',
+        dataIndex: 'submitTime',
+        key: 'submitTime',
+      },
       {
         title: '操作',
-        render: (_: unknown, record: OrderData) => (
-          <Space>
-            <a className={styles.viewLink}>查看详情</a>
-          </Space>
+        dataIndex: 'action',
+        key: 'action',
+        render: () => (
+          <Button
+            type="link"
+            icon={<EyeOutlined />}
+            className="action-btn view"
+          >
+            查看详情
+          </Button>
         ),
       },
     ],

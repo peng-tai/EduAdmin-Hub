@@ -8,9 +8,13 @@ import {
   Checkbox,
   Space,
   Pagination,
-  Switch,
 } from 'antd';
-import { SearchOutlined, RedoOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  SearchOutlined,
+  RedoOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import styles from './index.module.scss';
 import type { Dayjs } from 'dayjs';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -19,13 +23,11 @@ const { RangePicker } = DatePicker;
 
 interface OrderData {
   key: string;
-  userId: string;
-  nickname: string;
-  phone: string;
-  amount: number;
-  orderCount: number;
-  payTime: string;
-  disabled: boolean;
+  name: string;
+  thumb: string;
+  desc: string;
+  uploader: string;
+  addTime: string;
   checked: boolean;
 }
 
@@ -33,117 +35,97 @@ interface OrderData {
 const mockOrderData: OrderData[] = [
   {
     key: '1',
-    userId: 'CODE001',
-    nickname: '金金',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    name: '轮播图名称文字示例1',
+    thumb: 'https://picsum.photos/id/1/80/50',
+    desc: '轮播图说明文字示例1',
+    uploader: '金金',
+    addTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '2',
-    userId: 'CODE002',
-    nickname: '诸葛亮',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: true,
+    name: '如果超出十个字则...',
+    thumb: 'https://picsum.photos/id/2/80/50',
+    desc: '如果超出十个字则...',
+    uploader: '诸葛亮',
+    addTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '3',
-    userId: 'CODE003',
-    nickname: '曹操',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 6,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    name: '这是轮播图示例3',
+    thumb: 'https://picsum.photos/id/3/80/50',
+    desc: '这是说明示例3',
+    uploader: '曹操',
+    addTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '4',
-    userId: 'CODE004',
-    nickname: '小张',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
-    checked: false,
-  },
-  {
-    key: '5',
-    userId: 'CODE005',
-    nickname: '金金小张',
-    phone: '15810000000',
-    amount: 126.0,
-    orderCount: 3,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    name: '是轮播图名称示例4',
+    thumb: 'https://picsum.photos/id/4/80/50',
+    desc: '是说明名称示例4',
+    uploader: '小张',
+    addTime: '2021.07.01 15:00',
     checked: true,
   },
   {
+    key: '5',
+    name: '轮播图名称示例5',
+    thumb: 'https://picsum.photos/id/5/80/50',
+    desc: '说明名称示例5',
+    uploader: '金金小张',
+    addTime: '2021.07.01 15:00',
+    checked: false,
+  },
+  {
     key: '6',
-    userId: 'CODE006',
-    nickname: '王小样',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    name: '轮播图名称示例6',
+    thumb: 'https://picsum.photos/id/6/80/50',
+    desc: '说明名称示例6',
+    uploader: '王小样',
+    addTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '7',
-    userId: 'CODE007',
-    nickname: '穆一一',
-    phone: '15810000000',
-    amount: 68.0,
-    orderCount: 6,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    name: '轮播图名称示例7',
+    thumb: 'https://picsum.photos/id/7/80/50',
+    desc: '说明名称示例7',
+    uploader: '穆一一',
+    addTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '8',
-    userId: 'CODE008',
-    nickname: '邓君',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    name: '轮播图名称示例8',
+    thumb: 'https://picsum.photos/id/8/80/50',
+    desc: '说明名称示例8',
+    uploader: '邓君',
+    addTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '9',
-    userId: 'CODE009',
-    nickname: '刘备',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    name: '轮播图名称示例9',
+    thumb: 'https://picsum.photos/id/9/80/50',
+    desc: '说明名称示例9',
+    uploader: '刘备',
+    addTime: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '10',
-    userId: 'CODE010',
-    nickname: '关于',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 3,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    name: '轮播图名称示例10',
+    thumb: 'https://picsum.photos/id/10/80/50',
+    desc: '说明名称示例10',
+    uploader: '关于',
+    addTime: '2021.07.01 15:00',
     checked: false,
   },
 ];
 
-const StudentManager = () => {
+const CarouselManager = () => {
   // 搜索参数状态
   const [searchParams, setSearchParams] = useState({
     timeRange: [null, null] as [Dayjs | null, Dayjs | null],
@@ -194,46 +176,38 @@ const StudentManager = () => {
     () => [
       {
         title: <Checkbox className="table-header-checkbox" />,
-        dataIndex: 'check',
-        render: (_, record) => <Checkbox checked={record.checked} />,
+        dataIndex: 'checked',
+        render: (checked) => <Checkbox checked={checked} />,
         width: 40,
       },
       {
-        title: '用户ID',
-        dataIndex: 'userId',
-        key: 'userId',
+        title: '名称',
+        dataIndex: 'name',
+        key: 'name',
       },
       {
-        title: '用户昵称',
-        dataIndex: 'nickname',
-        key: 'nickname',
+        title: '缩略图',
+        dataIndex: 'thumb',
+        key: 'thumb',
+        render: (thumb) => (
+          <img src={thumb} alt="轮播图缩略图" className="carousel-thumb" />
+        ),
+        width: 120,
       },
       {
-        title: '手机号',
-        dataIndex: 'phone',
-        key: 'phone',
+        title: '说明',
+        dataIndex: 'desc',
+        key: 'desc',
       },
       {
-        title: '付费金额',
-        dataIndex: 'amount',
-        key: 'amount',
-        render: (val) => `¥${val.toFixed(2)}`,
+        title: '上传人',
+        dataIndex: 'uploader',
+        key: 'uploader',
       },
       {
-        title: '订单数量',
-        dataIndex: 'orderCount',
-        key: 'orderCount',
-      },
-      {
-        title: '付费时间',
-        dataIndex: 'payTime',
-        key: 'payTime',
-      },
-      {
-        title: '账户禁用',
-        dataIndex: 'disabled',
-        key: 'disabled',
-        render: (val) => <Switch checked={val} />,
+        title: '添加时间',
+        dataIndex: 'addTime',
+        key: 'addTime',
       },
       {
         title: '操作',
@@ -312,7 +286,7 @@ const StudentManager = () => {
 
       {/* 订单列表 */}
       <div className={styles.list}>
-        <h3 className={styles.listTitle}>学员列表</h3>
+        <h3 className={styles.listTitle}>轮播图列表</h3>
         <Table
           columns={columns}
           dataSource={mockOrderData}
@@ -350,4 +324,4 @@ const StudentManager = () => {
   );
 };
 
-export default StudentManager;
+export default CarouselManager;

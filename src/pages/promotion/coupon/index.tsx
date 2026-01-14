@@ -8,9 +8,14 @@ import {
   Checkbox,
   Space,
   Pagination,
-  Switch,
 } from 'antd';
-import { SearchOutlined, RedoOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  SearchOutlined,
+  RedoOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  EyeOutlined,
+} from '@ant-design/icons';
 import styles from './index.module.scss';
 import type { Dayjs } from 'dayjs';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -19,131 +24,120 @@ const { RangePicker } = DatePicker;
 
 interface OrderData {
   key: string;
-  userId: string;
-  nickname: string;
-  phone: string;
-  amount: number;
-  orderCount: number;
-  payTime: string;
-  disabled: boolean;
-  checked: boolean;
+  code: string;
+  name: string;
+  scope: string;
+  threshold: string;
+  denomination: number;
+  validity: string;
+  checked: boolean; 
 }
 
 // 模拟订单数据
 const mockOrderData: OrderData[] = [
   {
     key: '1',
-    userId: 'CODE001',
-    nickname: '金金',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE001',
+    name: '轮播图名称文字示例1',
+    scope: '所有课程',
+    threshold: '满0-50',
+    denomination: 88.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '2',
-    userId: 'CODE002',
-    nickname: '诸葛亮',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: true,
+    code: 'CODE002',
+    name: '如果超出十个字则...',
+    scope: '特惠课程',
+    threshold: '满99-80',
+    denomination: 128.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '3',
-    userId: 'CODE003',
-    nickname: '曹操',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 6,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE003',
+    name: '这是轮播图示例3',
+    scope: '秒杀课程',
+    threshold: '满0-50',
+    denomination: 88.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '4',
-    userId: 'CODE004',
-    nickname: '小张',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE004',
+    name: '轮播图名称示例4',
+    scope: '所有课程',
+    threshold: '满0-50',
+    denomination: 128.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '5',
-    userId: 'CODE005',
-    nickname: '金金小张',
-    phone: '15810000000',
-    amount: 126.0,
-    orderCount: 3,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE005',
+    name: '轮播图名称示例5',
+    scope: '特惠课程',
+    threshold: '满99-80',
+    denomination: 126.0,
+    validity: '2021.07.01 15:00',
     checked: true,
   },
   {
     key: '6',
-    userId: 'CODE006',
-    nickname: '王小样',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE006',
+    name: '轮播图名称示例6',
+    scope: '秒杀课程',
+    threshold: '满0-50',
+    denomination: 88.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '7',
-    userId: 'CODE007',
-    nickname: '穆一一',
-    phone: '15810000000',
-    amount: 68.0,
-    orderCount: 6,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE007',
+    name: '轮播图名称示例7',
+    scope: '所有课程',
+    threshold: '满0-50',
+    denomination: 68.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '8',
-    userId: 'CODE008',
-    nickname: '邓君',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 8,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE008',
+    name: '轮播图名称示例8',
+    scope: '特惠课程',
+    threshold: '满99-80',
+    denomination: 88.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '9',
-    userId: 'CODE009',
-    nickname: '刘备',
-    phone: '15810000000',
-    amount: 128.0,
-    orderCount: 1,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE009',
+    name: '轮播图名称示例9',
+    scope: '秒杀课程',
+    threshold: '满0-50',
+    denomination: 128.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
   {
     key: '10',
-    userId: 'CODE010',
-    nickname: '关于',
-    phone: '15810000000',
-    amount: 88.0,
-    orderCount: 3,
-    payTime: '2021.07.01 15:00',
-    disabled: false,
+    code: 'CODE010',
+    name: '轮播图名称示例10',
+    scope: '秒杀课程',
+    threshold: '满0-50',
+    denomination: 88.0,
+    validity: '2021.07.01 15:00',
     checked: false,
   },
 ];
 
-const StudentManager = () => {
+const Coupon = () => {
   // 搜索参数状态
   const [searchParams, setSearchParams] = useState({
     timeRange: [null, null] as [Dayjs | null, Dayjs | null],
@@ -194,46 +188,40 @@ const StudentManager = () => {
     () => [
       {
         title: <Checkbox className="table-header-checkbox" />,
-        dataIndex: 'check',
-        render: (_, record) => <Checkbox checked={record.checked} />,
+        dataIndex: 'checked',
+        render: (checked) => <Checkbox checked={checked} />,
         width: 40,
       },
       {
-        title: '用户ID',
-        dataIndex: 'userId',
-        key: 'userId',
+        title: '编号',
+        dataIndex: 'code',
+        key: 'code',
       },
       {
-        title: '用户昵称',
-        dataIndex: 'nickname',
-        key: 'nickname',
+        title: '名称',
+        dataIndex: 'name',
+        key: 'name',
       },
       {
-        title: '手机号',
-        dataIndex: 'phone',
-        key: 'phone',
+        title: '使用范围',
+        dataIndex: 'scope',
+        key: 'scope',
       },
       {
-        title: '付费金额',
-        dataIndex: 'amount',
-        key: 'amount',
+        title: '使用门槛',
+        dataIndex: 'threshold',
+        key: 'threshold',
+      },
+      {
+        title: '面值',
+        dataIndex: 'denomination',
+        key: 'denomination',
         render: (val) => `¥${val.toFixed(2)}`,
       },
       {
-        title: '订单数量',
-        dataIndex: 'orderCount',
-        key: 'orderCount',
-      },
-      {
-        title: '付费时间',
-        dataIndex: 'payTime',
-        key: 'payTime',
-      },
-      {
-        title: '账户禁用',
-        dataIndex: 'disabled',
-        key: 'disabled',
-        render: (val) => <Switch checked={val} />,
+        title: '有效期',
+        dataIndex: 'validity',
+        key: 'validity',
       },
       {
         title: '操作',
@@ -241,6 +229,13 @@ const StudentManager = () => {
         key: 'action',
         render: () => (
           <Space size="small">
+            <Button
+              type="link"
+              icon={<EyeOutlined />}
+              className="action-btn view"
+            >
+              查看
+            </Button>
             <Button
               type="link"
               icon={<EditOutlined />}
@@ -312,7 +307,7 @@ const StudentManager = () => {
 
       {/* 订单列表 */}
       <div className={styles.list}>
-        <h3 className={styles.listTitle}>学员列表</h3>
+        <h3 className={styles.listTitle}>优惠卷列表</h3>
         <Table
           columns={columns}
           dataSource={mockOrderData}
@@ -350,4 +345,4 @@ const StudentManager = () => {
   );
 };
 
-export default StudentManager;
+export default Coupon;
