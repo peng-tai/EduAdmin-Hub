@@ -3,6 +3,8 @@ import React from 'react';
 import styles from './index.module.scss';
 import TimeDistributionChart from './TimeDistributionChart';
 import PayAmountChart from './PayAmountChart';
+import ActiveStudents from './ActiveStudents';
+import RealTimeOverview from './RealTimeOverview';
 
 const Home = () => {
   return (
@@ -72,8 +74,12 @@ const Home = () => {
       </div>
 
       <div className={styles.chart}>
-        <div className={styles.time}>时段分布</div>
-        <div className={styles.gold}>金额分布</div>
+        <div className={styles.time}>
+          <ActiveStudents />
+        </div>
+        <div className={styles.gold}>
+          <RealTimeOverview></RealTimeOverview>
+        </div>
       </div>
     </div>
   );

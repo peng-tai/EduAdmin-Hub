@@ -56,18 +56,18 @@ const PayAmountChart = () => {
     return {
       title: {
         text: '实付金额',
-        left: '10px',
-        top: '10px',
+        left: '24px',
+        top: '24px',
         textStyle: {
-          fontSize: 14,
-          fontWeight: 'normal'
+          fontSize: 24,
+          fontWeight: '600'
         }
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '15%',
-        top: '40px',
+        left: '24px',
+        right: '24px',
+        bottom: '24px',
+        top: '80px',
         containLabel: true
       },
       tooltip: {
@@ -170,14 +170,14 @@ const PayAmountChart = () => {
   }, [chartData]);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '300px' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       {/* 图表容器 */}
       <div ref={chartRef} style={{ width: '100%', height: '100%' }} />
       {/* Antd日期选择器 + 按钮 */}
       <div style={{ 
         position: 'absolute', 
-        top: '10px', 
-        right: '10px', 
+        top: '24px', 
+        right: '24px', 
         display: 'flex', 
         alignItems: 'center',
         gap: 8

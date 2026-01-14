@@ -1,0 +1,88 @@
+.realTimeOverview {
+  position: relative;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  height: 100%;
+
+  // 标题+日期区域
+  .header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .dateWrapper {
+      font-size: 14px;
+      color: #666;
+    }
+  }
+
+  // 统计卡片网格
+  .cardGrid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // 2列布局
+    gap: 48px 36px;
+  }
+
+  // 单个统计卡片
+  .statCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    // 图标容器
+    .iconWrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+
+      // 不同卡片的图标背景色
+      &.orange {
+        background: #fa8c16;
+      }
+      &.green {
+        background: #52c41a;
+      }
+      &.yellow {
+        background: #faad14;
+      }
+      &.blue {
+        background: #1890ff;
+      }
+    }
+
+    // 文本信息区域
+    .infoWrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .label {
+        font-size: 14px;
+        color: #666;
+      }
+      .value {
+        font-size: 20px;
+        font-weight: 500;
+        color: #333;
+      }
+      .compare {
+        font-size: 12px;
+        color: #999;
+      }
+    }
+  }
+}

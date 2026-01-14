@@ -1,10 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 // 按需引入ECharts模块 + 导入类型定义
 import * as echarts from 'echarts/core';
-import type {
-  ECharts,
-  EChartsCoreOption,
-} from 'echarts/core';
+import type { ECharts, EChartsCoreOption } from 'echarts/core';
 import { LineChart } from 'echarts/charts';
 import {
   TitleComponent,
@@ -27,13 +24,12 @@ echarts.use([
 ]);
 
 type EchartsTooltipParams = {
-  name: string;         // X轴名称（如时段）
-  color: string;        // 系列颜色
-  seriesName: string;   // 系列名称（访客量/成交量）
+  name: string; // X轴名称（如时段）
+  color: string; // 系列颜色
+  seriesName: string; // 系列名称（访客量/成交量）
   value: number | string; // 数值
-  [key: string]: unknown;   // 兼容其他扩展属性
+  [key: string]: unknown; // 兼容其他扩展属性
 };
-
 
 const TimeDistributionChart = () => {
   // 1. 图表容器ref
@@ -67,25 +63,25 @@ const TimeDistributionChart = () => {
     return {
       title: {
         text: '时段分布',
-        left: '10px',
-        top: '10px',
+        left: '24px',
+        top: '24px',
         textStyle: {
-          fontSize: 14,
-          fontWeight: 'normal',
+          fontSize: 24,
+          fontWeight: '600',
         },
       },
       legend: {
         data: ['访客量', '成交量'],
-        left: '100px',
-        top: '10px',
+        left: '180px',
+        top: '28px',
         itemWidth: 12,
         itemHeight: 12,
       },
       grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '10%',
-        top: '40px',
+        left: '24px',
+        right: '24px',
+        bottom: '24px',
+        top: '80px',
         containLabel: true,
       },
       tooltip: {
@@ -207,7 +203,7 @@ const TimeDistributionChart = () => {
     };
   }, []);
 
-  return <div ref={chartRef} style={{ width: '100%', height: '300px' }} />;
+  return <div ref={chartRef} style={{ width: '100%', height: '100%' }} />;
 };
 
 export default TimeDistributionChart;
