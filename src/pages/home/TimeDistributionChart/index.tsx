@@ -78,14 +78,12 @@ const TimeDistributionChart = () => {
         itemHeight: 12,
       },
       grid: {
-        outerBounds:{
-          top: 80, // 上边界偏移
-          bottom: 0, // 下边界偏移（容纳 x 轴标签）
-          left: -24, // 左边界偏移（容纳 y 轴标签）
-          right: -24, // 右边界偏移  
-        }
+        top: 80, // 上边界偏移
+        bottom: 48, // 下边界偏移（容纳 x 轴标签）
+        left: 64, // 左边界偏移（容纳 y 轴标签）
+        right: 64, // 右边界偏移
       },
-        tooltip: {
+      tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow',

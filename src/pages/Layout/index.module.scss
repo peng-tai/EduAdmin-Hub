@@ -9,13 +9,52 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0;
+  padding: 24px;
   height: 80px;
 
   .bread {
     font-size: 16px;
     font-weight: 500;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logout {
+    display: flex;
+    align-items: center;
     margin-left: 24px;
+    color: #979797;
+    justify-content: center;
+
+    .logoutIcon {
+      color: #979797;
+      font-size: 24px;
+      margin-right: 16px;
+
+      &:hover {
+        color: #09d891 !important;
+        cursor: pointer;
+      }
+    }
+
+    &::before {
+      content: '';
+      width: 1px;
+      height: 16px;
+      margin-right: 24px;
+      border-left: 1px solid #979797;
+    }
+
+    .logoutText {
+      &:hover {
+        color: #09d891;
+        cursor: pointer;
+      }
+    }
   }
 }
 

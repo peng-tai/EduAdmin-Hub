@@ -3,16 +3,17 @@
 }
 
 .info {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 可选：列之间的间距（间隙） */
+  gap: 24px;
 
   .card {
     display: flex;
     justify-content: space-between;
     padding: 16px;
     border-radius: 4px;
-    width: 280px;
     height: 150px;
-    margin-left: 16px;
 
     &:first-child {
       margin-left: 0;
@@ -21,9 +22,18 @@
     color: #fff;
 
     .left {
+      display: flex;
+      align-items: center;
+      .icon {
+        font-size: 100px;
+        opacity: 0.3;
+      }
     }
 
     .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       text-align: right;
       .name {
         font-size: 24px;
@@ -31,12 +41,12 @@
       }
 
       .num {
-        font-size: 32px;
+        font-size: 24px;
         margin-bottom: 8px;
       }
 
       .desc {
-        font-size: 18px;
+        font-size: 16px;
       }
     }
   }
@@ -45,15 +55,15 @@
 .chart {
   display: flex;
   margin-top: 16px;
-  height: 360px;
+  height: 420px;
 
   .time {
-    width: 710px;
+    width: 50%;
     background-color: #fff;
   }
 
   .gold {
-    width: 450px;
+    width: 50%;
     background-color: #fff;
     margin-left: 24px;
   }

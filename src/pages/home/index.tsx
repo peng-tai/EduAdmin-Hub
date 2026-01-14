@@ -5,6 +5,12 @@ import TimeDistributionChart from './TimeDistributionChart';
 import PayAmountChart from './PayAmountChart';
 import ActiveStudents from './ActiveStudents';
 import RealTimeOverview from './RealTimeOverview';
+import {
+  FileTextOutlined,
+  PayCircleOutlined,
+  PercentageOutlined,
+  UsergroupAddOutlined,
+} from '@ant-design/icons';
 
 const Home = () => {
   return (
@@ -16,7 +22,9 @@ const Home = () => {
             background: 'linear-gradient(#70e8c9, #a9e8e5)',
           }}
         >
-          <div className={styles.left}>icon</div>
+          <div className={styles.left}>
+            <PayCircleOutlined className={styles.icon} />
+          </div>
           <div className={styles.right}>
             <div className={styles.name}>今日订单输入</div>
             <div className={styles.num}>¥6668.88</div>
@@ -29,7 +37,9 @@ const Home = () => {
             background: 'linear-gradient(#D067CB, #D966D3)',
           }}
         >
-          <div className={styles.left}>icon</div>
+          <div className={styles.left}>
+            <FileTextOutlined className={styles.icon} />
+          </div>
           <div className={styles.right}>
             <div className={styles.name}>今日订单数量</div>
             <div className={styles.num}>812</div>
@@ -42,7 +52,9 @@ const Home = () => {
             background: 'linear-gradient(#FDB06E, #FC9652)',
           }}
         >
-          <div className={styles.left}>icon</div>
+          <div className={styles.left}>
+            <UsergroupAddOutlined className={styles.icon} />
+          </div>
           <div className={styles.right}>
             <div className={styles.name}>今日访客数</div>
             <div className={styles.num}>323</div>
@@ -55,7 +67,9 @@ const Home = () => {
             background: 'linear-gradient(#FC8882, #FE716D)',
           }}
         >
-          <div className={styles.left}>icon</div>
+          <div className={styles.left}>
+            <PercentageOutlined className={styles.icon} />
+          </div>
           <div className={styles.right}>
             <div className={styles.name}>支付转化率</div>
             <div className={styles.num}>10%</div>

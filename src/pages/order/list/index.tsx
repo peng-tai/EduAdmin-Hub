@@ -197,15 +197,16 @@ const OrderList = () => {
         ),
         width: 40,
       },
-      { title: '订单编号', dataIndex: 'orderNo' },
-      { title: '用户昵称', dataIndex: 'nickname' },
-      { title: '手机号', dataIndex: 'phone' },
-      { title: '课程名称', dataIndex: 'courseName' },
-      { title: '订单金额', dataIndex: 'amount' },
-      { title: '订单状态', dataIndex: 'status' },
-      { title: '提交时间', dataIndex: 'submitTime' },
+      { title: '订单编号', dataIndex: 'orderNo', width: 120 },
+      { title: '用户昵称', dataIndex: 'nickname', width: 140 },
+      { title: '手机号', dataIndex: 'phone', width: 140 },
+      { title: '课程名称', dataIndex: 'courseName', width: 200 },
+      { title: '订单金额', dataIndex: 'amount', width: 120 },
+      { title: '订单状态', dataIndex: 'status', width: 120 },
+      { title: '提交时间', dataIndex: 'submitTime', width: 240 },
       {
         title: '操作',
+        width: 100,
         render: (_: unknown, record: OrderData) => (
           <Space>
             <a className={styles.viewLink}>查看</a>

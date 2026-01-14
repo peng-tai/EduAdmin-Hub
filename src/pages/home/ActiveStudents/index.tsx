@@ -60,7 +60,7 @@ const studentData: Student[] = [
 ];
 
 const ActiveStudents = () => {
- const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs('2020-09-05'));
+ const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
 
   // 日期选择器回调（可根据需求扩展）
   const handleDateChange: DatePickerProps['onChange'] = (date) => {

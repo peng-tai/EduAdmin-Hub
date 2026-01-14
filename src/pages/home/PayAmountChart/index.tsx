@@ -58,7 +58,7 @@ const PayAmountChart = () => {
   const chartInstanceRef = useRef<ECharts | null>(null);
 
   // 改用Dayjs对象存储选中日期
-  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs('2020-09-05'));
+  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
   const [chartData, setChartData] = useState<number[]>(
     mockDataMap['2020-09-05'],
   );
@@ -76,12 +76,10 @@ const PayAmountChart = () => {
         },
       },
       grid: {
-        outerBounds: {
-          top: 80, // 上边界偏移
-          bottom: 0, // 下边界偏移（容纳 x 轴标签）
-          left: 0, // 左边界偏移（容纳 y 轴标签）
-          right: 0, // 右边界偏移
-        },
+        top: 80, // 上边界偏移
+        bottom: 48, // 下边界偏移（容纳 x 轴标签）
+        left: 64, // 左边界偏移（容纳 y 轴标签）
+        right: 64, // 右边界偏移
       },
       tooltip: {
         trigger: 'axis',

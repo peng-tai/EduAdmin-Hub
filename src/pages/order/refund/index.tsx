@@ -169,6 +169,7 @@ const OrderRefund = () => {
 
   // 全选逻辑
   const handleAllCheck = useCallback((e: CheckboxChangeEvent) => {
+    console.log('全选状态变更:', e.target.checked);
     const checked = e.target.checked;
     setAllChecked(checked);
     setSelectedRowKeys(checked ? mockOrderData.map((item) => item.key) : []);
@@ -176,6 +177,7 @@ const OrderRefund = () => {
 
   // 行选逻辑
   const handleRowCheck = useCallback((e: CheckboxChangeEvent, key: string) => {
+    console.log('行选状态变更:', key, e.target.checked);
     setSelectedRowKeys((prev) => {
       const newSelected = [...prev];
       if (e.target.checked) {
@@ -192,35 +194,51 @@ const OrderRefund = () => {
   const columns = useMemo(
     () => [
       {
-        title: <Checkbox className="table-header-checkbox" />,
-        dataIndex: 'checked',
-        render: (checked) => <Checkbox checked={checked} />,
+        title: (
+          <Checkbox
+            checked={allChecked}
+            onChange={handleAllCheck}
+            className={styles.headerCheckbox}
+          />
+        ),
+        dataIndex: 'key',
+        render: (key: string) => (
+          <Checkbox
+            checked={selectedRowKeys.includes(key)}
+            onChange={(e) => handleRowCheck(e, key)}
+          />
+        ),
         width: 40,
       },
       {
         title: '订单编号',
         dataIndex: 'orderNo',
         key: 'orderNo',
+        width: 120,
       },
       {
         title: '用户昵称',
         dataIndex: 'nickname',
         key: 'nickname',
+        width: 140,
       },
       {
         title: '手机号',
         dataIndex: 'phone',
         key: 'phone',
+        width: 140,
       },
       {
         title: '课程名称',
         dataIndex: 'courseName',
         key: 'courseName',
+        width: 200,
         ellipsis: true, // 超出省略
       },
       {
         title: '订单金额',
         dataIndex: 'amount',
+        width: 120,
         key: 'amount',
         render: (val) => `¥${val.toFixed(2)}`,
       },
@@ -228,6 +246,7 @@ const OrderRefund = () => {
         title: '处理状态',
         dataIndex: 'status',
         key: 'status',
+        width: 120,
         render: (status) => (
           <span
             className={
@@ -239,19 +258,23 @@ const OrderRefund = () => {
         ),
       },
       {
+        width: 240,
         title: '提交时间',
         dataIndex: 'submitTime',
         key: 'submitTime',
       },
       {
         title: '操作',
+        width: 120,
         dataIndex: 'action',
         key: 'action',
         render: () => (
           <Button
             type="link"
             icon={<EyeOutlined />}
-            className="action-btn view"
+            style={{
+              color: '#2BC17B'
+            }}
           >
             查看详情
           </Button>

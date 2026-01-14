@@ -21,3 +21,35 @@
     }
   }
 }
+
+.coverImg {
+  width: 81px;
+  height: 54px;
+  border-radius: 4px;
+}
+
+/* 操作链接样式 */
+.editLink {
+  color: #2bc17b;
+
+  &::after {
+    position: relative;
+    left: 5px;
+    content: '';
+    width: 1px;
+    border-left: 1px solid #2bc17b;
+    height: 16px;
+  }
+}
+
+.upLink {
+  color: #2bc17b;
+}
+
+.downLink {
+  color: #2bc17b;
+}
+
+.deleteLink {
+  color: #fb5451;
+}
