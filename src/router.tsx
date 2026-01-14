@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/login/index.tsx';
 import Home from './pages/home/index.tsx';
 import './index.module.scss';
-import Layout from './pages/layout/index.tsx';
 import Course from './pages/course/index.tsx';
 import OrderList from './pages/order/list/index.tsx';
 import OrderRefund from './pages/order/refund/index.tsx';
@@ -13,6 +12,7 @@ import CarouselManager from './pages/info/carousel/index.tsx';
 import ArticleManager from './pages/info/article/index.tsx';
 import Seckill from './pages/promotion/seckill/index.tsx';
 import Coupon from './pages/promotion/coupon/index.tsx';
+import AppLayout from './pages/layout/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       { index: true, element: <Login /> }, // 默认首页
       {
         path: '/',
-        element: <Layout />, // 公共布局
+        element: <AppLayout />, // 公共布局
         errorElement: <div>出错了</div>,
         children: [
           { path: 'home', element: <Home /> },

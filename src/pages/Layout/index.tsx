@@ -119,7 +119,7 @@ const findMenuItemByKey = (
   return null;
 };
 
-const App: React.FC = () => {
+const AppLayout: React.FC = () => {
   const navigate = useNavigate();
 
   const [selectedMenu, setSelectedMenu] = useState<MenuItemType | null>(null);
@@ -198,4 +198,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default AppLayout;
