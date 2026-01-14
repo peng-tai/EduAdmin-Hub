@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DatePicker, type DatePickerProps } from 'antd';
 import styles from './index.module.scss';
 import type { Dayjs } from 'dayjs';
@@ -60,7 +60,7 @@ const studentData: Student[] = [
 ];
 
 const ActiveStudents = () => {
- const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
 
   // 日期选择器回调（可根据需求扩展）
   const handleDateChange: DatePickerProps['onChange'] = (date) => {

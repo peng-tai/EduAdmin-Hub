@@ -1,10 +1,10 @@
 # 工作流名称
-name: Build and Deploy to GitHub Pages
+name: Build and Deploy to GitHub Pages (pnpm)
 
 # 触发条件：推送到 main/master 分支时触发
 on:
   push:
-    branches: [main, master]
+    branches: [ main, master ]
 
 # 工作流任务
 jobs:
@@ -17,8 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # 拉取完整提交历史，用于检测commit信息
-          fetch-depth: 0
+          fetch-depth: 0  # 拉取完整提交历史，用于检测commit信息
 
       # 步骤2：检测最新commit信息（核心：只在commit包含[deploy]时继续）
       - name: Check commit message
@@ -27,7 +26,7 @@ jobs:
           # 获取最新一次commit的信息
           LAST_COMMIT_MSG=$(git log -1 --pretty=format:"%s")
           echo "最新Commit信息：$LAST_COMMIT_MSG"
-
+          
           # 检测是否包含[deploy]关键词（可自定义规则）
           if [[ $LAST_COMMIT_MSG == *"[deploy]"* ]]; then
             echo "✅ Commit包含部署指令，继续执行部署"
@@ -37,29 +36,34 @@ jobs:
             echo "deploy=false" >> $GITHUB_OUTPUT
           fi
 
-      # 步骤3：安装Node环境（根据项目调整版本，如18/20）
-      - name: Set up Node.js
-        if: steps.check_commit.outputs.deploy == 'true' # 只有检测通过才执行
+      # 步骤3：安装Node环境 + 安装pnpm（关键适配点）
+      - name: Set up Node.js and pnpm
+        if: steps.check_commit.outputs.deploy == 'true'  # 只有检测通过才执行
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm' # 缓存依赖，加速构建
+          node-version: 20  # 根据你的项目调整Node版本（如18）
+          cache: 'pnpm'     # 缓存pnpm依赖，加速构建
 
-      # 步骤4：安装依赖并打包
+      # 步骤4：安装pnpm包管理器（Ubuntu环境默认无pnpm，需手动安装）
+      - name: Install pnpm
+        if: steps.check_commit.outputs.deploy == 'true'
+        run: |
+          corepack enable  # 启用Node内置的corepack，管理pnpm版本
+          pnpm --version   # 验证pnpm安装成功
+
+      # 步骤5：安装依赖并打包（替换为pnpm命令）
       - name: Install dependencies and build
         if: steps.check_commit.outputs.deploy == 'true'
         run: |
-          npm install  # 项目如果用yarn，替换为 yarn install
-          npm run build  # 打包命令，根据项目调整（如yarn build）
+          pnpm install --frozen-lockfile  # 锁定依赖版本，避免意外更新（pnpm推荐写法）
+          pnpm build                  # 执行打包命令（和你本地运行的一致）
 
-      # 步骤5：部署到GitHub Pages
+      # 步骤6：部署到GitHub Pages
       - name: Deploy to GitHub Pages
         if: steps.check_commit.outputs.deploy == 'true'
-        uses: peaceiris/actions-gh-pages@v4 # 成熟的部署插件
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          # GitHub自动生成的令牌，用于推送部署文件
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # 打包后的文件目录（Vue默认dist，React默认build，根据项目调整）
+          # 注意：根据你的项目调整打包目录（Vue→dist，React→build，Next.js→out）
           publish_dir: ./dist
-          # 部署到gh-pages分支（GitHub Pages常用分支）
           publish_branch: gh-pages
