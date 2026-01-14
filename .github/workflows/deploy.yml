@@ -1,5 +1,5 @@
 # 工作流名称
-name: Build and Deploy to GitHub Pages (pnpm)
+name: Build and Deploy to GitHub Pages (yarn)
 
 # 触发条件：推送到 main/master 分支时触发
 on:
@@ -9,7 +9,7 @@ on:
 # 工作流任务
 jobs:
   deploy:
-    # 运行环境
+    # 运行环境（Ubuntu 默认预装 yarn）
     runs-on: ubuntu-latest
 
     steps:
@@ -19,13 +19,14 @@ jobs:
         with:
           fetch-depth: 0  # 拉取完整提交历史，用于检测commit信息
 
-      # 步骤2：检测最新commit信息
+      # 步骤2：检测最新commit信息（核心：含[deploy]才触发）
       - name: Check commit message
         id: check_commit
         run: |
           LAST_COMMIT_MSG=$(git log -1 --pretty=format:"%s")
           echo "最新Commit信息：$LAST_COMMIT_MSG"
           
+          # 检测是否包含[deploy]关键词（可自定义，如[发布]、[上线]）
           if [[ $LAST_COMMIT_MSG == *"[deploy]"* ]]; then
             echo "✅ Commit包含部署指令，继续执行部署"
             echo "deploy=true" >> $GITHUB_OUTPUT
@@ -34,39 +35,28 @@ jobs:
             echo "deploy=false" >> $GITHUB_OUTPUT
           fi
 
-      # 步骤3：安装Node环境（先配置Node，再手动安装pnpm）
+      # 步骤3：安装Node环境（仅检测通过时执行）
       - name: Set up Node.js
         if: steps.check_commit.outputs.deploy == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: 20  # 根据你的项目调整版本
-          cache: 'pnpm'     # 缓存pnpm依赖
+          node-version: 20  # 根据你的项目调整Node版本（如18）
+          cache: 'yarn'     # 缓存yarn依赖，加速构建
 
-      # 步骤4：手动安装pnpm（核心修复点：确保pnpm加入PATH）
-      - name: Install pnpm (fix PATH issue)
+      # 步骤4：安装依赖并执行yarn build打包
+      - name: Install dependencies and build with yarn
         if: steps.check_commit.outputs.deploy == 'true'
         run: |
-          # 方式1：通过npm全局安装（最稳定，兼容所有Node版本）
-          npm install -g pnpm
-          # 验证pnpm是否安装成功并加入PATH
-          pnpm --version
-          # 打印PATH，确认pnpm所在目录在PATH中（调试用，可保留）
-          echo "PATH: $PATH"
+          # yarn install --frozen-lockfile 锁定版本（可选，和yarn install效果一致）
+          yarn install  # 环境自带yarn，直接执行即可
+          yarn build    # 触发打包命令（和你本地运行的一致）
 
-      # 步骤5：安装依赖并打包
-      - name: Install dependencies and build
-        if: steps.check_commit.outputs.deploy == 'true'
-        run: |
-          # 锁定版本安装依赖（pnpm推荐）
-          pnpm install --frozen-lockfile
-          # 执行打包命令
-          pnpm run build
-
-      # 步骤6：部署到GitHub Pages
+      # 步骤5：部署到GitHub Pages
       - name: Deploy to GitHub Pages
         if: steps.check_commit.outputs.deploy == 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # 根据项目调整（Vue→dist，React→build）
-          publish_branch: gh-pages
+          # 打包输出目录：Vue→dist，React→build，Next.js→out（根据你的项目调整）
+          publish_dir: ./dist
+          publish_branch: gh-pages  # 部署到gh-pages分支
