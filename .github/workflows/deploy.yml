@@ -1,0 +1,65 @@
+# 工作流名称
+name: Build and Deploy to GitHub Pages
+
+# 触发条件：推送到 main/master 分支时触发
+on:
+  push:
+    branches: [main, master]
+
+# 工作流任务
+jobs:
+  deploy:
+    # 运行环境
+    runs-on: ubuntu-latest
+
+    steps:
+      # 步骤1：拉取仓库代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # 拉取完整提交历史，用于检测commit信息
+          fetch-depth: 0
+
+      # 步骤2：检测最新commit信息（核心：只在commit包含[deploy]时继续）
+      - name: Check commit message
+        id: check_commit
+        run: |
+          # 获取最新一次commit的信息
+          LAST_COMMIT_MSG=$(git log -1 --pretty=format:"%s")
+          echo "最新Commit信息：$LAST_COMMIT_MSG"
+
+          # 检测是否包含[deploy]关键词（可自定义规则）
+          if [[ $LAST_COMMIT_MSG == *"[deploy]"* ]]; then
+            echo "✅ Commit包含部署指令，继续执行部署"
+            echo "deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Commit未包含[deploy]，跳过部署"
+            echo "deploy=false" >> $GITHUB_OUTPUT
+          fi
+
+      # 步骤3：安装Node环境（根据项目调整版本，如18/20）
+      - name: Set up Node.js
+        if: steps.check_commit.outputs.deploy == 'true' # 只有检测通过才执行
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm' # 缓存依赖，加速构建
+
+      # 步骤4：安装依赖并打包
+      - name: Install dependencies and build
+        if: steps.check_commit.outputs.deploy == 'true'
+        run: |
+          npm install  # 项目如果用yarn，替换为 yarn install
+          npm run build  # 打包命令，根据项目调整（如yarn build）
+
+      # 步骤5：部署到GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: steps.check_commit.outputs.deploy == 'true'
+        uses: peaceiris/actions-gh-pages@v4 # 成熟的部署插件
+        with:
+          # GitHub自动生成的令牌，用于推送部署文件
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 打包后的文件目录（Vue默认dist，React默认build，根据项目调整）
+          publish_dir: ./dist
+          # 部署到gh-pages分支（GitHub Pages常用分支）
+          publish_branch: gh-pages
