@@ -36,21 +36,22 @@ jobs:
             echo "deploy=false" >> $GITHUB_OUTPUT
           fi
 
-      # 步骤3：安装Node环境 + 安装pnpm（关键适配点）
-      - name: Set up Node.js and pnpm
+      # 步骤3：安装Node环境
+      - name: Set up Node.js
         if: steps.check_commit.outputs.deploy == 'true'  # 只有检测通过才执行
         uses: actions/setup-node@v4
         with:
           node-version: 20  # 根据你的项目调整Node版本（如18）
-          cache: 'pnpm'     # 缓存pnpm依赖，加速构建
 
-      # 步骤4：安装pnpm包管理器（Ubuntu环境默认无pnpm，需手动安装）
+      # 步骤4：安装pnpm包管理器
       - name: Install pnpm
         if: steps.check_commit.outputs.deploy == 'true'
-        run: |
-          corepack enable  # 启用Node内置的corepack，管理pnpm版本
-          corepack prepare pnpm@latest --activate  # 确保安装最新版本的pnpm
-          pnpm --version   # 验证pnpm安装成功
+        run: npm install -g pnpm  # 使用npm全局安装pnpm
+      
+      # 步骤4b：验证pnpm安装
+      - name: Verify pnpm installation
+        if: steps.check_commit.outputs.deploy == 'true'
+        run: pnpm --version
 
       # 步骤5：安装依赖并打包（替换为pnpm命令）
       - name: Install dependencies and build
