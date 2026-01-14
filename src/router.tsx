@@ -12,7 +12,7 @@ import CarouselManager from './pages/info/carousel/index.tsx';
 import ArticleManager from './pages/info/article/index.tsx';
 import Seckill from './pages/promotion/seckill/index.tsx';
 import Coupon from './pages/promotion/coupon/index.tsx';
-import AppLayout from './pages/layout/index.tsx';
+import AppLayout from './pages/Layout/index.tsx';
 
 const router = createBrowserRouter([
   {
