@@ -57,7 +57,6 @@ jobs:
       - name: Install dependencies and build
         if: steps.check_commit.outputs.deploy == 'true'
         run: |
-          pnpm add -D typescript @types/node  # 添加类型依赖
           pnpm install --frozen-lockfile  # 锁定依赖版本，避免意外更新（pnpm推荐写法）
           pnpm run build                  # 执行打包命令（和你本地运行的一致）
 
