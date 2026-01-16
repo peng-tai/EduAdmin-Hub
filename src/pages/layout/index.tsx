@@ -3,6 +3,7 @@ import {
   CloseCircleOutlined,
   DesktopOutlined,
   FileOutlined,
+  GithubOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -202,7 +203,15 @@ const AppLayout: React.FC = () => {
         <Content className={styles.content}>
           <Outlet></Outlet>
         </Content>
-        <Footer className={styles.footer}>Created by PengTai</Footer>
+        <Footer className={styles.footer}>
+          Created by PengTai
+          <GithubOutlined
+            onClick={() => window.open("https://github.com/peng-tai/EduAdmin-Hub")}
+            style={{
+              marginLeft: 16,
+            }}
+          />
+        </Footer>
       </Layout>
     </Layout>
   );
