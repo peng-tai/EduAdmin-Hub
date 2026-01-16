@@ -178,54 +178,59 @@ const CarouselManager = () => {
         title: <Checkbox className="table-header-checkbox" />,
         dataIndex: 'checked',
         render: (checked) => <Checkbox checked={checked} />,
-        width: 40,
+        width: 60,
       },
       {
         title: '名称',
         dataIndex: 'name',
         key: 'name',
+        width: 120,
       },
       {
         title: '缩略图',
         dataIndex: 'thumb',
         key: 'thumb',
+        width: 160,
         render: (thumb) => (
           <img src={thumb} alt="轮播图缩略图" className="carousel-thumb" />
         ),
-        width: 120,
       },
       {
         title: '说明',
         dataIndex: 'desc',
         key: 'desc',
+        width: 240,
       },
       {
         title: '上传人',
         dataIndex: 'uploader',
         key: 'uploader',
+        width: 120,
       },
       {
         title: '添加时间',
         dataIndex: 'addTime',
         key: 'addTime',
+        width: 160,
       },
       {
         title: '操作',
         dataIndex: 'action',
         key: 'action',
+        width: 100,
         render: () => (
           <Space size="small">
             <Button
               type="link"
               icon={<EditOutlined />}
-              className="action-btn edit"
+              className={styles.viewLink}
             >
               编辑
             </Button>
             <Button
               type="link"
               icon={<DeleteOutlined />}
-              className="action-btn delete"
+              className={styles.deleteLink}
             >
               删除
             </Button>

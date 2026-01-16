@@ -184,49 +184,54 @@ const ArticleManager = () => {
         title: '标题',
         dataIndex: 'title',
         key: 'title',
+        width: 120,
       },
       {
         title: '封面',
         dataIndex: 'cover',
         key: 'cover',
+        width: 60,
         render: (cover) => (
           <img src={cover} alt="文章封面" className="article-cover" />
         ),
-        width: 80,
       },
       {
         title: '描述',
         dataIndex: 'desc',
         key: 'desc',
+        width: 180,
         ellipsis: true, // 超出省略（hover显示完整）
       },
       {
         title: '上传人',
         dataIndex: 'uploader',
         key: 'uploader',
+        width: 120,
       },
       {
         title: '添加时间',
         dataIndex: 'addTime',
         key: 'addTime',
+        width: 140,
       },
       {
         title: '操作',
         dataIndex: 'action',
         key: 'action',
+        width: 100,
         render: () => (
           <Space size="small">
             <Button
               type="link"
               icon={<EditOutlined />}
-              className="action-btn edit"
+              className={styles.viewLink}
             >
               编辑
             </Button>
             <Button
               type="link"
               icon={<DeleteOutlined />}
-              className="action-btn delete"
+              className={styles.deleteLink}
             >
               删除
             </Button>

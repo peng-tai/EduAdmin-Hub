@@ -8,6 +8,7 @@ import {
   Checkbox,
   Space,
   Pagination,
+  Tag,
 } from 'antd';
 import { SearchOutlined, RedoOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
@@ -16,26 +17,26 @@ import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 const { RangePicker } = DatePicker;
 
-interface OrderData {
+interface OrderRecord {
   key: string;
   orderNo: string;
   nickname: string;
   phone: string;
   courseName: string;
-  amount: string;
+  amount: number;
   status: string;
   submitTime: string;
 }
 
 // 模拟订单数据
-const mockOrderData: OrderData[] = [
+const mockOrderData: OrderRecord[] = [
   {
     key: '1',
     orderNo: 'CODE001',
     nickname: '金金',
     phone: '15810000000',
     courseName: '教程名称文字示例1',
-    amount: '88.00',
+    amount: 88,
     status: '待支付',
     submitTime: '2021.07.01 15:00',
   },
@@ -45,7 +46,7 @@ const mockOrderData: OrderData[] = [
     nickname: '诸葛亮',
     phone: '15810000000',
     courseName: '如果超出八个字显...',
-    amount: '128.00',
+    amount: 128,
     status: '已支付',
     submitTime: '2021.07.01 15:00',
   },
@@ -55,7 +56,7 @@ const mockOrderData: OrderData[] = [
     nickname: '曹操',
     phone: '15810000000',
     courseName: '这是教程示例3',
-    amount: '88.00',
+    amount: 88,
     status: '已关闭',
     submitTime: '2021.07.01 15:00',
   },
@@ -65,7 +66,7 @@ const mockOrderData: OrderData[] = [
     nickname: '小张',
     phone: '15810000000',
     courseName: '教程名称示例4',
-    amount: '128.00',
+    amount: 128.0,
     status: '已支付',
     submitTime: '2021.07.01 15:00',
   },
@@ -75,7 +76,7 @@ const mockOrderData: OrderData[] = [
     nickname: '金金小张',
     phone: '15810000000',
     courseName: '教程名称示例5',
-    amount: '126.00',
+    amount: 126,
     status: '待支付',
     submitTime: '2021.07.01 15:00',
   },
@@ -85,7 +86,7 @@ const mockOrderData: OrderData[] = [
     nickname: '王小样',
     phone: '15810000000',
     courseName: '教程名称示例6',
-    amount: '88.00',
+    amount: 88.0,
     status: '已支付',
     submitTime: '2021.07.01 15:00',
   },
@@ -95,7 +96,7 @@ const mockOrderData: OrderData[] = [
     nickname: '穆一一',
     phone: '15810000000',
     courseName: '教程名称示例7',
-    amount: '68.00',
+    amount: 68,
     status: '已支付',
     submitTime: '2021.07.01 15:00',
   },
@@ -105,7 +106,7 @@ const mockOrderData: OrderData[] = [
     nickname: '邓基',
     phone: '15810000000',
     courseName: '教程名称示例8',
-    amount: '88.00',
+    amount: 88,
     status: '已关闭',
     submitTime: '2021.07.01 15:00',
   },
@@ -115,7 +116,7 @@ const mockOrderData: OrderData[] = [
     nickname: '刘备',
     phone: '15810000000',
     courseName: '教程名称示例9',
-    amount: '128.00',
+    amount: 128,
     status: '已支付',
     submitTime: '2021.07.01 15:00',
   },
@@ -125,7 +126,7 @@ const mockOrderData: OrderData[] = [
     nickname: '关于',
     phone: '15810000000',
     courseName: '教程名称示例10',
-    amount: '88.00',
+    amount: 88,
     status: '已支付',
     submitTime: '2021.07.01 15:00',
   },
@@ -177,6 +178,18 @@ const OrderList = () => {
     });
   }, []);
 
+  const handleView = (record: OrderRecord) => {
+    console.log('查看订单:', record);
+  };
+
+  const handleCancel = (record: OrderRecord) => {
+    console.log('取消订单:', record);
+  };
+
+  const handleDelete = (record: OrderRecord) => {
+    console.log('删除订单:', record);
+  };
+
   // 表格列配置
   const columns = useMemo(
     () => [
@@ -195,26 +208,88 @@ const OrderList = () => {
             onChange={(e) => handleRowCheck(e, key)}
           />
         ),
-        width: 40,
+        width: 60,
       },
-      { title: '订单编号', dataIndex: 'orderNo', width: 120 },
-      { title: '用户昵称', dataIndex: 'nickname', width: 140 },
-      { title: '手机号', dataIndex: 'phone', width: 140 },
-      { title: '课程名称', dataIndex: 'courseName', width: 200 },
-      { title: '订单金额', dataIndex: 'amount', width: 120 },
-      { title: '订单状态', dataIndex: 'status', width: 120 },
-      { title: '提交时间', dataIndex: 'submitTime', width: 240 },
+      {
+        title: '订单编号',
+        dataIndex: 'orderNo',
+        width: 120,
+      },
+      {
+        title: '用户昵称',
+        dataIndex: 'nickname',
+        width: 100,
+      },
+      {
+        title: '手机号',
+        dataIndex: 'phone',
+        width: 130,
+      },
+      {
+        title: '课程名称',
+        dataIndex: 'courseName',
+        width: 200,
+        ellipsis: true,
+      },
+      {
+        title: '订单金额',
+        dataIndex: 'amount',
+        width: 100,
+        render: (amount: number) => `¥${amount.toFixed(2)}`,
+        align: 'right',
+      },
+      {
+        title: '订单状态',
+        dataIndex: 'status',
+        width: 100,
+        render: (status: OrderRecord['status']) => {
+          const colorMap = {
+            待支付: 'orange',
+            已支付: 'green',
+            已关闭: 'gray',
+          };
+          return <Tag color={colorMap[status]}>{status}</Tag>;
+        },
+      },
+      {
+        title: '提交时间',
+        dataIndex: 'submitTime',
+        key: 'submitTime',
+        width: 150,
+      },
       {
         title: '操作',
-        width: 100,
-        render: (_: unknown, record: OrderData) => (
-          <Space>
-            <a className={styles.viewLink}>查看</a>
-            {record.status === '待支付' && (
-              <a className={styles.cancelLink}>取消</a>
-            )}
-            {record.status === '已关闭' && (
-              <a className={styles.deleteLink}>删除</a>
+        width: 120,
+        render: (_, record) => (
+          <Space size="small">
+            <Button
+              type="link"
+              size="small"
+              onClick={() => handleView(record)}
+              className={styles.viewLink}
+            >
+              查看
+            </Button>
+            {record.status === '待支付' ? (
+              <Button
+                type="link"
+                size="small"
+                danger
+                onClick={() => handleCancel(record)}
+                className={styles.cancelLink}
+              >
+                取消
+              </Button>
+            ) : (
+              <Button
+                type="link"
+                size="small"
+                danger
+                onClick={() => handleDelete(record)}
+                className={styles.deleteLink}
+              >
+                删除
+              </Button>
             )}
           </Space>
         ),

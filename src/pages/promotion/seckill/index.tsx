@@ -190,31 +190,34 @@ const Seckill = () => {
         title: <Checkbox className="table-header-checkbox" />,
         dataIndex: 'checked',
         render: (checked) => <Checkbox checked={checked} />,
-        width: 40,
+        width: 60,
       },
       {
         title: '活动编号',
         dataIndex: 'activityNo',
         key: 'activityNo',
+        width: 140,
       },
       {
         title: '活动标题',
         dataIndex: 'title',
         key: 'title',
+        width: 120,
       },
       {
         title: '活动封面',
         dataIndex: 'cover',
         key: 'cover',
+        width: 140,
         render: (cover) => (
           <img src={cover} alt="活动封面" className="activity-cover" />
         ),
-        width: 80,
       },
       {
         title: '活动状态',
         dataIndex: 'status',
         key: 'status',
+        width: 100,
         render: (status) => (
           <span
             className={
@@ -229,36 +232,39 @@ const Seckill = () => {
         title: '开始时间',
         dataIndex: 'startTime',
         key: 'startTime',
+        width: 140,
       },
       {
         title: '结束时间',
         dataIndex: 'endTime',
         key: 'endTime',
+        width: 140,
       },
       {
         title: '操作',
         dataIndex: 'action',
         key: 'action',
+        width: 100,
         render: () => (
           <Space size="small">
             <Button
               type="link"
               icon={<SettingOutlined />}
-              className="action-btn setting"
+              className={styles.viewLink}
             >
               设置
             </Button>
             <Button
               type="link"
               icon={<EditOutlined />}
-              className="action-btn edit"
+              className={styles.editLink}
             >
               编辑
             </Button>
             <Button
               type="link"
               icon={<DeleteOutlined />}
-              className="action-btn delete"
+              className={styles.deleteLink}
             >
               删除
             </Button>

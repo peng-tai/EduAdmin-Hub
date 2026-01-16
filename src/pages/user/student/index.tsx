@@ -10,7 +10,12 @@ import {
   Pagination,
   Switch,
 } from 'antd';
-import { SearchOutlined, RedoOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  SearchOutlined,
+  RedoOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import styles from './index.module.scss';
 import type { Dayjs } from 'dayjs';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -196,62 +201,70 @@ const StudentManager = () => {
         title: <Checkbox className="table-header-checkbox" />,
         dataIndex: 'check',
         render: (_, record) => <Checkbox checked={record.checked} />,
-        width: 40,
+        width: 60,
       },
       {
         title: '用户ID',
         dataIndex: 'userId',
         key: 'userId',
+        width: 120,
       },
       {
         title: '用户昵称',
         dataIndex: 'nickname',
         key: 'nickname',
+        width: 120,
       },
       {
         title: '手机号',
         dataIndex: 'phone',
         key: 'phone',
+        width: 140,
       },
       {
         title: '付费金额',
         dataIndex: 'amount',
         key: 'amount',
         render: (val) => `¥${val.toFixed(2)}`,
+        width: 120,
       },
       {
         title: '订单数量',
         dataIndex: 'orderCount',
         key: 'orderCount',
+        width: 120,
       },
       {
         title: '付费时间',
         dataIndex: 'payTime',
         key: 'payTime',
+        width: 180,
       },
       {
         title: '账户禁用',
         dataIndex: 'disabled',
         key: 'disabled',
+        width: 140,
         render: (val) => <Switch checked={val} />,
       },
       {
         title: '操作',
         dataIndex: 'action',
         key: 'action',
+        width: 100,
         render: () => (
           <Space size="small">
             <Button
               type="link"
               icon={<EditOutlined />}
-              className="action-btn edit"
+              className={styles.viewLink}
             >
               编辑
             </Button>
             <Button
               type="link"
               icon={<DeleteOutlined />}
-              className="action-btn delete"
+              className={styles.deleteLink}
             >
               删除
             </Button>

@@ -8,6 +8,7 @@ import {
   Checkbox,
   Space,
   Pagination,
+  Tag,
 } from 'antd';
 import { SearchOutlined, RedoOutlined, EyeOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
@@ -190,6 +191,9 @@ const OrderRefund = () => {
     });
   }, []);
 
+  const handleViewDetail = (record: OrderData) => {
+    console.log('查看详情:', record);
+  }
   // 表格列配置
   const columns = useMemo(
     () => [
@@ -208,76 +212,77 @@ const OrderRefund = () => {
             onChange={(e) => handleRowCheck(e, key)}
           />
         ),
-        width: 40,
+        width: 60,
       },
       {
         title: '订单编号',
         dataIndex: 'orderNo',
-        key: 'orderNo',
         width: 120,
+        fixed: 'left',
       },
       {
         title: '用户昵称',
         dataIndex: 'nickname',
-        key: 'nickname',
-        width: 140,
+        width: 100,
       },
       {
         title: '手机号',
         dataIndex: 'phone',
         key: 'phone',
-        width: 140,
+        width: 130,
       },
       {
         title: '课程名称',
         dataIndex: 'courseName',
         key: 'courseName',
         width: 200,
-        ellipsis: true, // 超出省略
+        ellipsis: true,
       },
       {
         title: '订单金额',
         dataIndex: 'amount',
-        width: 120,
-        key: 'amount',
-        render: (val) => `¥${val.toFixed(2)}`,
+        width: 100,
+        render: (amount: number) => `¥${amount.toFixed(2)}`,
+        align: 'right',
       },
       {
         title: '处理状态',
         dataIndex: 'status',
-        key: 'status',
-        width: 120,
-        render: (status) => (
-          <span
-            className={
-              status === '待处理' ? 'status-pending' : 'status-handled'
-            }
-          >
-            {status}
-          </span>
-        ),
+        width: 100,
+        render: (status: OrderData['status']) => {
+          const colorMap = {
+            待处理: 'orange',
+            已处理: 'green',
+          };
+          const textMap = {
+            待处理: '待处理',
+            已处理: '已处理',
+          };
+          return <Tag color={colorMap[status]}>{textMap[status]}</Tag>;
+        },
       },
       {
-        width: 240,
         title: '提交时间',
         dataIndex: 'submitTime',
         key: 'submitTime',
+        width: 150,
       },
       {
         title: '操作',
-        width: 120,
-        dataIndex: 'action',
         key: 'action',
-        render: () => (
-          <Button
-            type="link"
-            icon={<EyeOutlined />}
-            style={{
-              color: '#2BC17B'
-            }}
-          >
-            查看详情
-          </Button>
+        width: 100,
+        fixed: 'right',
+        render: (_, record) => (
+          <Space size="small">
+            <Button
+              type="link"
+              size="small"
+              onClick={() => handleViewDetail(record)}
+              className={styles.viewLink}
+            >
+              查看详情
+            </Button>
+          </Space>
         ),
       },
     ],

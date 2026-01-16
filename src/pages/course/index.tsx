@@ -131,7 +131,7 @@ const Course = () => {
             }}
           />
         ),
-        width: 40,
+        width: 60,
       },
       { title: '编号', dataIndex: 'code', width: 120 },
       { title: '名称', dataIndex: 'name', width: 200 },

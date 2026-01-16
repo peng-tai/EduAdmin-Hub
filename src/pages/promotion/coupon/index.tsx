@@ -30,7 +30,7 @@ interface OrderData {
   threshold: string;
   denomination: number;
   validity: string;
-  checked: boolean; 
+  checked: boolean;
 }
 
 // 模拟订单数据
@@ -190,63 +190,70 @@ const Coupon = () => {
         title: <Checkbox className="table-header-checkbox" />,
         dataIndex: 'checked',
         render: (checked) => <Checkbox checked={checked} />,
-        width: 40,
+        width: 60,
       },
       {
         title: '编号',
         dataIndex: 'code',
         key: 'code',
+        width: 120,
       },
       {
         title: '名称',
         dataIndex: 'name',
         key: 'name',
+        width: 120,
       },
       {
         title: '使用范围',
         dataIndex: 'scope',
         key: 'scope',
+        width: 120,
       },
       {
         title: '使用门槛',
         dataIndex: 'threshold',
         key: 'threshold',
+        width: 120,
       },
       {
         title: '面值',
         dataIndex: 'denomination',
         key: 'denomination',
         render: (val) => `¥${val.toFixed(2)}`,
+        width: 120,
       },
       {
         title: '有效期',
         dataIndex: 'validity',
         key: 'validity',
+        width: 120,
       },
       {
         title: '操作',
         dataIndex: 'action',
         key: 'action',
+        width: 100,
         render: () => (
           <Space size="small">
             <Button
               type="link"
               icon={<EyeOutlined />}
-              className="action-btn view"
+              className={styles.viewLink}
             >
               查看
             </Button>
             <Button
               type="link"
               icon={<EditOutlined />}
-              className="action-btn edit"
+              className={styles.editLink}
             >
               编辑
             </Button>
             <Button
               type="link"
               icon={<DeleteOutlined />}
-              className="action-btn delete"
+              className={styles.deleteLink}
             >
               删除
             </Button>

@@ -9,7 +9,12 @@ import {
   Space,
   Pagination,
 } from 'antd';
-import { SearchOutlined, RedoOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  SearchOutlined,
+  RedoOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import styles from './index.module.scss';
 import type { Dayjs } from 'dayjs';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -161,35 +166,39 @@ const TeacherManager = () => {
         title: '讲师名称',
         dataIndex: 'nickname',
         key: 'nickname',
+        width: 120,
       },
       {
         title: '讲师简介',
         dataIndex: 'intro',
         key: 'intro',
+        width: 320,
         ellipsis: { showTitle: false }, // 超出省略（hover显示完整）
       },
       {
         title: '添加时间',
         dataIndex: 'addTime',
         key: 'addTime',
+        width: 160,
       },
       {
         title: '操作',
         dataIndex: 'action',
         key: 'action',
+        width: 100,
         render: () => (
           <Space size="small">
             <Button
               type="link"
               icon={<EditOutlined />}
-              className="action-btn edit"
+              className={styles.viewLink}
             >
               编辑
             </Button>
             <Button
               type="link"
               icon={<DeleteOutlined />}
-              className="action-btn delete"
+              className={styles.deleteLink}
             >
               删除
             </Button>
